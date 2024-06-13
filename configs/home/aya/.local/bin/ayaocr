@@ -1,0 +1,54 @@
+#!/home/aya/.local/share/micromamba/envs/spider/bin/python
+"""
+@File    :   ayaocr
+@Time    :   2023/07/14 14:21:05
+@Author  :   Ayatale 
+@Version :   1.2
+@Contact :   ayatale@qq.com
+@Github  :   https://github.com/brx86/
+@Desc    :   screenshot and baidu ocr
+"""
+
+from rich.traceback import install
+
+install()
+
+import os
+import re
+import base64
+import requests
+from io import BytesIO
+from PIL import ImageGrab
+
+
+def access_token():
+    params = {
+        "grant_type": "client_credentials",
+        "client_id": "4p32nESPsvA2rVsjsZxcPeVp",
+        "client_secret": "mW64PLGhDOUjwo5CHrfgAQGMHxeVOpec",
+    }
+    resp = requests.post("https://aip.baidubce.com/oauth/2.0/token", params=params)
+    return resp.json()["access_token"]
+
+
+def screenshot():
+    area = list(map(int, re.split(r"x|\+|\n", os.popen("slop").read().strip())))
+    bbox = (area[2], area[3], area[0] + area[2], area[1] + area[3])
+    image_bytes = BytesIO()
+    ImageGrab.grab(bbox).save(image_bytes, format="JPEG")
+    return image_bytes.getvalue()
+
+
+def ocr():
+    url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic"
+    params = {"image": base64.b64encode(screenshot()), "access_token": access_token()}
+    resp = requests.post(url, data=params)
+    if resp.status_code == 200:
+        text_list = [item["words"] for item in resp.json()["words_result"]]
+        with open("/tmp/ocr.txt", "w") as f:
+            f.write("\n".join(text_list))
+        os.popen("zenity --text-info --filename=/tmp/ocr.txt --width=1000 --height=500")
+
+
+if __name__ == "__main__":
+    ocr()

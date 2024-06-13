@@ -1,0 +1,10 @@
+cmd-wrapped
+conceal-bin
+fcitx5-pinyin-custom-pinyin-dictionary
+linuxqq
+micromamba-bin
+mpv-uosc-git
+tcping-go-bin
+ttf-hymmnos-ar
+ventoy-bin
+visual-studio-code-bin

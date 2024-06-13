@@ -1,0 +1,76 @@
+#!/usr/bin/python3
+# -*- encoding: utf-8 -*-
+"""
+@File    :   edit.py
+@Time    :   2024/03/27 09:58:06
+@Author  :   Ayatale
+@Version :   1.1
+@Contact :   ayatale@qq.com
+@Github  :   https://github.com/brx86/
+@Desc    :   edit and backup your config
+"""
+
+import os
+from sys import argv
+from pathlib import Path
+from subprocess import run
+
+base = "/home/aya/git/profile_manager/configs"
+editor = "micro"
+
+
+def check_file(path: Path, allow_dir=False):
+    if path.is_file() or (path.is_dir() and allow_dir):
+        return path.absolute()
+    else:
+        print(f"文件不存在：{path}")
+        exit(1)
+
+
+def get_path(path, allow_dir=False):
+    file_path = Path(path)
+    if os.access(file_path, os.R_OK | os.W_OK):
+        return check_file(file_path, allow_dir=allow_dir)
+    else:
+        try:
+            check_file(file_path, allow_dir=allow_dir)
+        except PermissionError:
+            pass
+        print("正在使用管理员权限...")
+        exit(run(["sudo"] + argv).returncode)
+
+
+def backup_file(profile, backup):
+    if not backup.parent.exists():
+        backup.parent.mkdir(parents=True, exist_ok=True)
+    if run(["cp", "-a", profile, backup]).returncode == 0:
+        print(f"\033[32mBackup:\033[0m {profile} \033[93m=>\033[0m {backup}")
+
+
+def remove_file(backup):
+    run(["rm", "-rf", Path(f"{base}{profile}")])
+    print(f"\033[33mRemove:\033[0m {backup}")
+
+
+if __name__ == "__main__":
+    if len(argv) == 1 or argv[1] in ["help", "-h", "--help"]:
+        name = Path(argv[0]).name
+        print(
+            f"用法: {name} <操作> [路径]\n\n"
+            "操作: \n"
+            f"    {name} help\t\t查看帮助\n"
+            f"    {name} [文件路径]\t编辑配置文件并备份\n"
+            f"    {name} add [文件路径]\t添加配置文件/文件夹\n"
+            f"    {name} del [文件路径]\t删除备份文件/文件夹"
+        )
+        exit(0)
+    elif argv[1] == "add":
+        profile = get_path(argv[2], allow_dir=True)
+        backup_file(profile, Path(f"{base}{profile}"))
+    elif argv[1] == "del":
+        profile = get_path(argv[2], allow_dir=True)
+        remove_file(Path(f"{base}{profile}"))
+    else:
+        profile = get_path(argv[1])
+        run([editor, profile])
+        backup_file(profile, Path(f"{base}{profile}"))

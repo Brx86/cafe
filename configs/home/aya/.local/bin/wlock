@@ -1,0 +1,4 @@
+#!/bin/bash
+sleep 0.5
+# 5: mouse  9: touchpad  6: keyboard
+evtest /dev/input/event5 --grab|evtest /dev/input/event9 --grab|evtest /dev/input/event6 --grab|awk '/7003a/ {system("pkill evtest")}'

@@ -1,0 +1,9 @@
+serverAddr = "82.156.27.226"
+serverPort = 7999
+
+[[proxies]]
+name = "ssh-ayal"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 22
+remotePort = 2022
