@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#pkill -9 dolphin
+nohup dolphin ~ > /dev/null 2>&1 &
+echo key super+ctrl+a|dotool

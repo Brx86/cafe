@@ -1,0 +1,35 @@
+#!/bin/bash
+# Author: Ayatale <ayatale@qq.com>
+
+#dev="HBXDU20521000487"
+#dev="192.168.0.191:5555"
+# 定义安卓设备上的图片存储路径
+sharepath=/sdcard/Pictures/share/
+timenow=$(date "+%Y-%m-%d_%H.%M.%S")
+
+# 如果有$1参数则发送$1路径图片，否则如果剪贴板第一位为图片则发送
+if [ -n "$1" ]; then
+    picpath=$1
+    picname=$timenow-${picpath##*/}
+    cp "$picpath" "/tmp/$picname"
+elif wl-paste -t image/png >"/tmp/$timenow.png"; then
+#elif xclip -selection clipboard -t image/jpeg -o >"/tmp/$timenow.jpg"; then
+#elif xclip -selection clipboard -t image/png -o >"/tmp/$timenow.png"; then
+    picpath="/tmp/$timenow.png"
+    picname=${picpath##*/}
+else
+    notify-send -t 500 "No Image in Clipboard!"
+    exit 0
+fi
+
+# 发送图片并刷新相册缓存，弹出系统通知
+#if adb -s $dev push "/tmp/$picname" "$sharepath"; then
+#    adb -s $dev shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d "file://$sharepath"
+if adb push "/tmp/$picname" "$sharepath"; then
+    adb shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d "file://$sharepath"
+    notify-send -t 500 "Send Success!" "$picpath"
+else
+    notify-send -t 500 "Send Failed!"
+fi
+# 删除图片缓存
+rm "/tmp/$picname"

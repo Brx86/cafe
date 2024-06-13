@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=vmpv Media Player
+GenericName=Multimedia player
+Icon=mpv
+Exec=/home/aya/.local/bin/vmpv
+Terminal=false
+Categories=AudioVideo;Audio;Video;Player;TV;
+X-KDE-Protocols=ftp,http,https,mms,rtmp,rtsp,sftp,smb,srt,rist,webdav,webdavs
+StartupWMClass=mpv

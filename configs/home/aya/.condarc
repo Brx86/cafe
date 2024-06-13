@@ -1,0 +1,6 @@
+channels:
+  - conda-forge
+show_channel_urls: true
+custom_channels:
+  conda-forge: https://mirrors.bfsu.edu.cn/anaconda/cloud
+  pytorch: https://mirrors.bfsu.edu.cn/anaconda/cloud

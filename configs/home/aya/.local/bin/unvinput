@@ -1,0 +1,10 @@
+#!/home/aya/.local/share/micromamba/envs/spider/bin/python
+
+import os, time
+import pyperclip
+import unvcode
+
+text_input = os.popen("zenity --entry --text=请输入文本").read().strip()
+pyperclip.copy(unvcode.unvcode(text_input,skip_ascii=False,mse=0.8)[0])
+time.sleep(0.1)
+os.popen("echo key ctrl+v|dotool")

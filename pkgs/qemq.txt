@@ -1,0 +1,17 @@
+age-of-war-2
+ayavoid
+bloom-defender
+cmd-wrapped
+conceal-bin
+dotool
+fcitx5-pinyin-custom-pinyin-dictionary
+linuxqq
+mercury-browser-bin
+micromamba-bin
+mpv-uosc-git
+realesrgan-ncnn-vulkan-bin
+tcping-go-bin
+ttf-hymmnos-ar
+visual-studio-code-bin
+yozo-office
+zombies-trailer-park

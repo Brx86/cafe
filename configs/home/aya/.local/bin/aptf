@@ -1,0 +1,51 @@
+#!/home/aya/.local/share/micromamba/envs/spider/bin/python
+"""
+@File    :   aptf
+@Time    :   2023/03/02 22:18:15
+@Author  :   Ayatale 
+@Version :   1.1
+@Contact :   ayatale@qq.com
+@Github  :   https://github.com/brx86/
+@Desc    :   apt-file by spider
+"""
+
+import httpx
+from lxml import etree
+
+def first(it, default=""):
+    return next(iter(it), default)
+
+def search(file_name, suite="kinetic", arch="amd64"):
+    params = {
+        "searchon": "contents",
+        "keywords": file_name,
+        "mode": "filename",
+        "suite": suite,
+        "arch": arch,
+    }
+
+    r = httpx.get(
+        "https://packages.ubuntu.com/search",
+        params=params,
+#        proxies="http://127.0.0.1:20171",
+        headers={
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/110.0"
+        },
+    )
+    html = etree.HTML(r.text, parser=None)
+    lines: list[etree._Element] = html.xpath("//table/tr")[1:]
+    try:
+        for line in lines[1:]:
+            pkg_name = first(line.xpath("td/a/text()"))
+            pkg_arch = line.xpath("td[2]/text()")[1].strip()
+            file_path = (
+                first(line.xpath('td[@class="file"]/text()'))
+                + first(line.xpath('td[@class="file"]/span/text()'))
+            )
+            print(f"\033[32m{pkg_name}\033[0m/{suite} {pkg_arch}\n    {file_path}\n")
+    except IndexError:
+        print(f"Full result:{r.url}")
+
+import sys
+
+search(sys.argv[1])
