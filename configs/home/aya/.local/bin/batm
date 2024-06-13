@@ -1,0 +1,29 @@
+#!/bin/bash
+echo '开始充电...'
+pkexec bash -c "echo 0 > /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode"
+notify-send '开始充电...' -i battery
+
+while : ; do
+    # 获取当前电池电量和最大电量
+    energy_now=$(cat /sys/class/power_supply/BAT0/energy_now)
+    energy_full=$(cat /sys/class/power_supply/BAT0/energy_full)
+    # 计算当前电量占最大电量的比例
+    battery_level=$(echo "scale=2; $energy_now/$energy_full" | bc)
+    # 判断电池电量是否高于85%
+    if (( $(echo "$battery_level >= 0.75" | bc -l) )); then
+        notify-send '停止充电' '电量已达到75%' -i battery
+        pkexec bash -c "echo 1 > /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode"
+        exit
+    # 判断电池电量是否低于70%
+#    elif (( $(echo "$battery_level < 0.7" | bc -l) )); then
+#        sudo bash -c "echo 0 > /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode"
+#        notify-send '电量低于70%，开始充电' -i battery
+    else 
+        power_now=$(cat /sys/class/power_supply/BAT0/power_now)
+        if [ "$power_now" -gt 0 ];then
+            power_now=${power_now::0-3}
+        fi
+        echo "[$(date "+%Y-%m-%d %H:%M:%S")] ${power_now}mW $(acpi -i|head -1|cut -d' ' -f 3-) "
+    fi
+    sleep 10
+done

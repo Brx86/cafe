@@ -1,0 +1,24 @@
+#!/bin/bash
+base=/home/aya/git/profile_manager/configs  # 必填！设置备份文件夹
+
+
+if_exists_path() { # 检测文件是否存在，是则获取路径
+    if [ -e "$1" ]; then
+        realpath $1
+    else
+        echo "文件不存在：$1"
+        exit 1
+    fi
+}
+
+if [ "$1" == "add" ]; then
+    profile=$(if_exists_path "$2")
+else
+    profile=$(if_exists_path "$1")
+    micro $profile
+fi
+
+backup="${base}${profile}"
+mkdir -p "${backup%/*}" || sudo mkdir -p "${backup%/*}"
+[ -r $profile ] && cp -a $profile $backup || sudo cp -a $profile $backup
+echo -e "\033[32mSuccess:\033[0m ${profile} \033[93m=>\033[0m ${backup}"

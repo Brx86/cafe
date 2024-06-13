@@ -1,0 +1,15 @@
+[ExtractDialog]
+DirHistory[$e]=/tmp/
+
+[General]
+LockSidebar=true
+ShowSidebar=true
+
+[KFileDialog Settings]
+Recent Files[$e]=file:$HOME/.local/share/fonts
+Recent URLs[$e]=file:///tmp/
+detailViewIconSize=16
+
+[MainWindow]
+StatusBar=Disabled
+ToolBarsMovable=Disabled

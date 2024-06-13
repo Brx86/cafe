@@ -1,0 +1,11 @@
+# /dev/sda2
+UUID=91ce38e1-fb92-4c10-a466-b71bdc51e416	/         	btrfs     	rw,noatime,compress=zstd:5,ssd,nodiscard,space_cache=v2,subvol=/@root	0 0
+
+# /dev/sda2
+UUID=91ce38e1-fb92-4c10-a466-b71bdc51e416	/home     	btrfs     	rw,noatime,compress=zstd:5,ssd,nodiscard,space_cache=v2,subvol=/@home	0 0
+
+# /dev/sda1
+# UUID=1AF3-CC78      	/efi      	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+
+# /dev/nvme1n1p3
+UUID=c1ee83ea-5f9b-4d48-bed2-0f4ed2517f52	none      	swap      	defaults  	0 0

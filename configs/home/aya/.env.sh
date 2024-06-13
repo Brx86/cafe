@@ -1,0 +1,1 @@
+/home/aya/.config/plasma-workspace/env/env.sh

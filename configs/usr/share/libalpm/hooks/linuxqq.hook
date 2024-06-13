@@ -1,0 +1,10 @@
+[Trigger]
+Type = Path
+Operation = Install
+Operation = Upgrade
+Target = opt/QQ/resources/app/app_launcher/index.js
+
+[Action]
+Description = Patching QQ...
+When = PostTransaction
+Exec = /bin/bash -c "cp /home/aya/git/LiteLoaderQQNT/index.js /opt/QQ/resources/app/app_launcher/index.js&&chmod a+w -R /opt/QQ/"

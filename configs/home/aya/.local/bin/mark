@@ -1,0 +1,5 @@
+#!/bin/bash
+ip rule|grep '0x800'||sudo ip rule add fwmark 0x800 table 1145
+ip -6 rule|grep '0x800'||sudo ip -6 rule add fwmark 0x800 table 1145
+ip route show table 1145|grep default||sudo ip route add $(ip route|grep -P 'default.+wlp4s0') table 1145
+ip -6 route show table 1145|grep default||sudo ip -6 route add $(ip -6 route|grep -P 'default.+wlp4s0') table 1145

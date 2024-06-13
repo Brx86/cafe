@@ -1,0 +1,20 @@
+# Archive Asia
+#Server = https://asia.archive.pkgbuild.com/repos/2021/12/11/$repo/os/$arch
+#Server = https://asia.archive.pkgbuild.com/repos/last/$repo/os/$arch
+
+# xtom 
+#Server = https://mirrors.xtom.us/archlinux/$repo/os/$arch
+#Server = https://mirrors.xtom.de/archlinux/$repo/os/$arch
+
+# 中科大
+Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
+# 北外
+Server = https://mirrors.bfsu.edu.cn/archlinux/$repo/os/$arch
+# 上交
+Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux/$repo/os/$arch
+# 腾讯
+Server = https://mirrors.cloud.tencent.com/archlinux/$repo/os/$arch
+# 华为
+Server = https://mirrors.huaweicloud.com/archlinux/$repo/os/$arch
+# 网易
+Server = http://mirrors.163.com/archlinux/$repo/os/$arch

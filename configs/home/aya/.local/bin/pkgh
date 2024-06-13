@@ -1,0 +1,48 @@
+#!/home/aya/.local/share/micromamba/envs/spider/bin/python
+"""
+@File    :   pkgh
+@Time    :   2022/08/06 21:43:49
+@Author  :   Ayatale
+@Version :   1.3
+@Contact :   ayatale@qq.com
+@Github  :   https://github.com/brx86/
+@Desc    :   Find the package history of a package.
+"""
+
+from rich.console import Console
+from rich.table import Table
+
+import os, re, time, httpx
+
+
+#ARCHIVE_URL = "https://archive.archlinux.org/packages"
+ARCHIVE_URL = "https://asia.archive.pkgbuild.com/packages"
+PATTERN = "([^-]+-[0-9.]+)-(any|x86_64).(pkg.tar.[0-9a-z]*)<\/a>\s*(.*\d)\s{1,}(\w*)"
+
+
+def get_pkg_history(pkg_name):
+    pattern = re.compile(rf"{pkg_name}-{PATTERN}")
+    response = httpx.get(f"{ARCHIVE_URL}/{pkg_name[0]}/{pkg_name}/")
+    return pattern.findall(response.text)
+
+
+def match_package(pkg_name):
+    history_dict = {}
+    for p in get_pkg_history(pkg_name):
+        version, _, _, raw_time, size = p
+        fmt_time = time.strptime(raw_time, "%d-%b-%Y %H:%M")
+        real_time = time.strftime("%Y-%m-%d %H:%M", fmt_time)
+        history_dict[fmt_time] = (version, real_time, size)
+    return [history_dict[k] for k in sorted(history_dict)]
+
+
+if __name__ == "__main__":
+    data = match_package(os.sys.argv[1])
+    console = Console()
+    table = Table(show_header=True, style="bold")
+    table.add_column("Version", style="green")
+    table.add_column("Update Time")
+    table.add_column("Size", style="blue")
+    for v in data:
+        table.add_row(v[0], v[1], v[2])
+    console.print(table)

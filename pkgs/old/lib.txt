@@ -1,0 +1,11 @@
+lib32-pipewire
+libadwaita-demos
+libcec
+libcurl-compat
+libcurl-gnutls
+libheif
+libtool
+libva-mesa-driver
+libva-utils
+mesa-utils
+mesa-vdpau

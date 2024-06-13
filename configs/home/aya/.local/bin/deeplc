@@ -1,0 +1,26 @@
+#!/home/aya/.local/share/micromamba/envs/spider/bin/python
+#!/usr/bin/python3
+
+import os, sys, json, http.client
+from pyperclip import paste
+
+
+def deepl_api(text):
+    if not text.replace("\n", "").replace("\r", ""):
+        print("zenity --warning --text='剪贴板为空，请选择文本'")
+        exit(1)
+    try:
+        conn = http.client.HTTPSConnection("127.0.0.1:8000")
+        payload = json.dumps({"text": text, "target_lang": "ZH"})
+        conn.request("POST", "/api", payload)
+        res = conn.getresponse().read()
+        return json.loads(res).get("data")
+    except Exception as e:
+        print(f"zenity --error --text='翻译出错，请稍后再试'")
+        print(repr(e))
+        exit(1)
+
+
+if __name__ == "__main__":
+    translate_results = deepl_api(sys.stdin.read())  # 调用翻译接口
+    print(translate_results)
