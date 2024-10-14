@@ -1,0 +1,11 @@
+services:
+  flare:
+    image: soulteary/flare
+    container_name: flare
+    network_mode: bridge
+    restart: unless-stopped
+    command: flare
+    ports:
+      - 5005:5005
+    volumes:
+      - ./app:/app

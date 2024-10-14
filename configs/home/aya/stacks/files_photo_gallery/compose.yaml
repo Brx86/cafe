@@ -1,0 +1,10 @@
+services:
+  php:
+    image: php:8-apache
+    container_name: gallery
+    network_mode: bridge
+    volumes:
+      - /home/aya/Downloads:/var/www/html
+    ports:
+      - 5256:80
+    restart: unless-stopped

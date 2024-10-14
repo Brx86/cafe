@@ -1,0 +1,15 @@
+services:
+  peerbanhelper:
+    image: ghostchu/peerbanhelper
+    container_name: peerbanhelper
+    network_mode: bridge
+    volumes:
+      - ./data:/app/data
+    ports:
+      - 9898:9898
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=UTC
+    restart: unless-stopped
+networks: {}
