@@ -1,0 +1,15 @@
+services:
+  fast:
+    image: wangbinxingkong/fast:latest
+    container_name: fastos
+    ports:
+      - 8081:8081
+      - 8082:8082
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/docker/:/etc/docker/
+      - ./data:/fast/data
+    environment:
+      - FAST_STORE=http://dockernb.com:8300
+    network_mode: bridge
+    restart: unless-stopped
