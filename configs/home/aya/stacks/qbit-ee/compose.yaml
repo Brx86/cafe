@@ -1,0 +1,17 @@
+services:
+  qbittorrentee:
+    image: superng6/qbittorrentee
+    container_name: qbittorrentee
+    network_mode: bridge
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./config:/config
+      - ./downloads:/downloads
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+      - 2000:8080
+    restart: unless-stopped

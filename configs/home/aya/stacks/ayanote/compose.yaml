@@ -1,0 +1,15 @@
+services:
+  siyuan:
+    image: b3log/siyuan
+    container_name: ayanote
+    network_mode: bridge
+    command: ['--accessAuthCode=wwww']
+#    user: '1000:1000'
+    environment:
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - 6606:6806
+    volumes:
+      - ./workspace:/siyuan/workspace
+    restart: unless-stopped
