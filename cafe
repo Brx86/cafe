@@ -15,7 +15,7 @@ from sys import argv
 from pathlib import Path
 from subprocess import run
 
-base = "/home/aya/git/profile_manager/configs"
+base = "/home/aya/git/cafe/configs"
 editor = "micro"
 
 
