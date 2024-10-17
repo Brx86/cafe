@@ -1,11 +1,27 @@
-# /dev/sda2
-UUID=91ce38e1-fb92-4c10-a466-b71bdc51e416	/         	btrfs     	rw,noatime,compress=zstd:5,ssd,nodiscard,space_cache=v2,subvol=/@root	0 0
+# Static information about the filesystems.
+# See fstab(5) for details.
 
-# /dev/sda2
-UUID=91ce38e1-fb92-4c10-a466-b71bdc51e416	/home     	btrfs     	rw,noatime,compress=zstd:5,ssd,nodiscard,space_cache=v2,subvol=/@home	0 0
+# <file system> <dir> <type> <options> <dump> <pass>
 
-# /dev/sda1
-# UUID=1AF3-CC78      	/efi      	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+# /dev/nvme0n1p2 root
+UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/         		btrfs	rw,noatime,ssd,nodiscard,space_cache=v2,subvol=/@root		0 0
 
-# /dev/nvme1n1p3
-UUID=c1ee83ea-5f9b-4d48-bed2-0f4ed2517f52	none      	swap      	defaults  	0 0
+# /dev/nvme0n1p2 home
+UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/home     		btrfs	rw,noatime,ssd,nodiscard,space_cache=v2,subvol=/@home		0 0
+
+# /dev/nvme0n1p2 log
+UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/log		btrfs	rw,noatime,ssd,nodiscard,space_cache=v2,subvol=/@var-log    0 0
+
+# /dev/nvme0n1p2 cache
+UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/cache		btrfs	rw,noatime,ssd,nodiscard,space_cache=v2,subvol=/@var-cache	0 0
+
+# /dev/nvme0n1p2 podman
+UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/lib/docker		btrfs	rw,noatime,ssd,nodiscard,space_cache=v2,subvol=/@docker		0 0
+#UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/lib/containers	btrfs	rw,noatime,ssd,nodiscard,space_cache=v2,subvol=/@docker		0 0
+
+# /dev/nvme0n1p1
+# UUID=5241-5BDB      	/efi      	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+
+# swapfile
+/@swap/swapfile     	none      	swap      	defaults  	0 0
+
