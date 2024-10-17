@@ -4,82 +4,77 @@ global {
     so_mark_from_dae: 0
     log_level: info
     disable_waiting_network: false
-    #lan_interface: docker0
+    lan_interface: docker0,enp1s0
     wan_interface: auto
     auto_config_kernel_parameter: true
-    tcp_check_url: 'http://gstatic.com/generate_204'
+    tcp_check_url: 'https://cp.cloudflare.com'
     tcp_check_http_method: HEAD
     udp_check_dns: 'dns.google.com:53'
     check_interval: 120s
     check_tolerance: 200ms
-    dial_mode: domain
+    dial_mode: domain++
     allow_insecure: true
     sniffing_timeout: 5000ms
     tls_implementation: utls
     utls_imitate: chrome_auto
 }
 
-subscription {AA
+subscription {
     #feiniao: 'https://feiniaoyun01.life/api/v1/client/subscribe?token=62d82c5c878f724bb72fb05ccdb25350'
     #feiniao: 'https://aya1.de/https://feiniaoyun01.life/api/v1/client/subscribe?token=62d82c5c878f724bb72fb05ccdb25350'
-    cent: 'https://www.yfjc.xyz/api/v1/client/subscribe?token=7041a063caaf3d9f304c899af3c99b6f'
+    #cent: 'https://aya1.de/https://www.yfjc.xyz/api/v1/client/subscribe?token=7041a063caaf3d9f304c899af3c99b6f'
+    cent: 'http://82.156.27.226:55244/raw.txt'
 }
 
 node {
-    rn: 'juicity://a4027a92-6d5f-4d11-a2aa-38fb9d802d05:bfjs22jd0871nHDd1NTCz@107.173.87.186:8080/?congestion_control=bbr&sni=u.5435486.xyz#racknerd'
+    #rn: 'juicity://a4027a92-6d5f-4d11-a2aa-38fb9d802d05:bfjs22jd0871nHDd1NTCz@107.173.87.186:8080/?congestion_control=bbr&sni=u.5435486.xyz#racknerd'
 }
 
 # See https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/dns.md for full examples.
 dns {
     ipversion_prefer: 4
     upstream {
-#        china: 'udp://180.76.76.76:53'
-        china: 'tcp://82.156.27.226:50053'
-        oversea: 'tcp://dns.google.com:53'
+        alidns: 'tcp://114.114.114.114:53'
+        googledns: 'tcp://dns.google.com:53'
     }
     routing {
         request {
-            qname(geosite:category-ads-all) -> reject
-#            qname(geosite:zhihu) -> asis
-            qname(geosite:cn) -> china
-            fallback: oversea
+            qname(geosite:cn) -> alidns
+            fallback: googledns
         }
     }
 }
 
 group {
     proxy {
-        #filter: subtag(feiniao) && name(regex: '新加坡|日本')
-        filter: subtag(cent) # && name(keyword: '专线')
+        #filter: name(rn)
+        #filter: subtag(cent) && name(keyword: '新加坡', keyword: '日本')
         policy: min_avg10
     }
-#    rack {
-#        filter: name(rn)
-#        policy: fixed(0)
-#    }
-#    spider {
-#        filter: subtag(feiniao)
-#        policy: random
-#    }
 }
 
 routing {
-#     pname(python,curl) -> spider
-    pname(NetworkManager) -> must_direct
-    pname(qbittorrent-nox, zerotier-one, BloonsTD6.exe, qq) -> direct
+    dip(geoip:private) -> direct
 
+    ### 自定义分流
+    pname(qbittorrentee, gg) -> direct
     domain(geosite:"category-ads-all") -> block
-    domain(ip.aya1.de) -> proxy
-    domain(aya1.de,
-        aya1.eu.org,
-        ayatale.eu.org,
-        thwiki.cc,
-        keyword: 'ninjakiwi',
-        keyword: 'nkstatic',
-        keyword: 'pikpak') -> direct
+    dip(47.80.0.4) -> direct # KR 阿里云
+    domain(note.aya1.de) -> proxy
+    domain(ip.aya1.de,aya1.de,aya1.eu.org,ayatale.eu.org) -> direct
+    domain(akamaihd.net,
+           akamaized.net,
+           aliyuncs.com,
+           cdn.nlark.com,
+           doubao.com,
+           dreamtonics.com.cn,
+           ghp.ci,
+           steamdb.info,
+           steamserver.net,
+           hdslb.com) -> direct
 
-    l4proto(udp) && dport(443) -> block
-    dip(geoip:private, geoip:cn) -> direct
+    # l4proto(udp) && dport(443) -> block
+    dip(geoip:cn) -> direct
     domain(geosite:cn) -> direct
     fallback: proxy
 }
