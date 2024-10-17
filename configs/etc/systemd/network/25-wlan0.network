@@ -1,0 +1,12 @@
+[Match]
+Name=wlan0
+
+[Network]
+DHCP=yes
+DNS=114.114.114.114
+
+[DHCPv4]
+RouteMetric=600
+
+[IPv6AcceptRA]
+RouteMetric=600
