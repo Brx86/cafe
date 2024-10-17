@@ -4,4 +4,5 @@
 # Syntax: simple "KEY=VAL" pairs on separate lines
 #
 EDITOR=micro
+BAT_THEME=OneHalfDark
 QT_LOGGING_RULES='*=false'
