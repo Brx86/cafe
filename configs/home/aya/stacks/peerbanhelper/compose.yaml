@@ -12,4 +12,3 @@ services:
       - PGID=0
       - TZ=UTC
     restart: unless-stopped
-networks: {}
