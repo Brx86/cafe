@@ -15,7 +15,7 @@ UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/log		btrfs	rw,noatime,ssd,nodisca
 # /dev/nvme0n1p2 cache
 UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/cache		btrfs	rw,noatime,ssd,nodiscard,space_cache=v2,subvol=/@var-cache	0 0
 
-# /dev/nvme0n1p2 podman
+# /dev/nvme0n1p2 docker
 UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/lib/docker		btrfs	rw,noatime,ssd,nodiscard,space_cache=v2,subvol=/@docker		0 0
 #UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/lib/containers	btrfs	rw,noatime,ssd,nodiscard,space_cache=v2,subvol=/@docker		0 0
 
