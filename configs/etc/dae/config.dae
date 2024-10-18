@@ -9,7 +9,7 @@ global {
     auto_config_kernel_parameter: true
     tcp_check_url: 'https://cp.cloudflare.com'
     tcp_check_http_method: HEAD
-    udp_check_dns: 'dns.google.com:53'
+    udp_check_dns: '8.8.8.8:53'
     check_interval: 120s
     check_tolerance: 200ms
     dial_mode: domain++
@@ -35,7 +35,7 @@ dns {
     ipversion_prefer: 4
     upstream {
         alidns: 'tcp://114.114.114.114:53'
-        googledns: 'tcp://dns.google.com:53'
+        googledns: 'tcp://8.8.8.8:53'
     }
     routing {
         request {
@@ -54,14 +54,15 @@ group {
 }
 
 routing {
+    pname(systemd-resolved) -> must_direct
     dip(geoip:private) -> direct
 
     ### 自定义分流
-    pname(qbittorrentee, gg) -> direct
+    pname(ayaping, qbittorrentee, gg) -> direct
     domain(geosite:"category-ads-all") -> block
     dip(47.80.0.4) -> direct # KR 阿里云
     domain(note.aya1.de) -> proxy
-    domain(ip.aya1.de,aya1.de,aya1.eu.org,ayatale.eu.org) -> direct
+    domain(ip.aya1.de,aya1.de,aya1.eu.org,ayatale.eu.org,ip.sb,ip.zxinc.org,ipw.cn,ipv6-test.com) -> direct
     domain(akamaihd.net,
            akamaized.net,
            aliyuncs.com,
@@ -69,9 +70,10 @@ routing {
            doubao.com,
            dreamtonics.com.cn,
            ghp.ci,
+           hdslb.com,
            steamdb.info,
            steamserver.net,
-           hdslb.com) -> direct
+           test-ipv6.com) -> direct
 
     # l4proto(udp) && dport(443) -> block
     dip(geoip:cn) -> direct
