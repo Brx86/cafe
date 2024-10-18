@@ -3,6 +3,7 @@ Name=enp0s20f0u4
 
 [Network]
 DHCP=yes
+IPv6AcceptRA=yes
 
 [DHCPv4]
 RouteMetric=100
