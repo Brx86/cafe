@@ -34,7 +34,7 @@ node {
 dns {
     ipversion_prefer: 4
     upstream {
-        alidns: 'tcp://114.114.114.114:53'
+        alidns: 'udp://114.114.114.114:53'
         googledns: 'tcp://8.8.8.8:53'
     }
     routing {
@@ -49,6 +49,7 @@ group {
     proxy {
         #filter: name(rn)
         #filter: subtag(cent) && name(keyword: '新加坡', keyword: '日本')
+        #filter: name(keyword: '香港', keyword: '日本', keyword: '台湾', keyword: '韩国')
         policy: min_avg10
     }
 }
@@ -65,6 +66,7 @@ routing {
     domain(ip.aya1.de,aya1.de,aya1.eu.org,ayatale.eu.org,ip.sb,ip.zxinc.org,ipw.cn,ipv6-test.com) -> direct
     domain(akamaihd.net,
            akamaized.net,
+           keyword: akamai,
            aliyuncs.com,
            cdn.nlark.com,
            doubao.com,
@@ -73,6 +75,7 @@ routing {
            hdslb.com,
            steamdb.info,
            steamserver.net,
+           keyword: syncthing,
            test-ipv6.com) -> direct
 
     # l4proto(udp) && dport(443) -> block
