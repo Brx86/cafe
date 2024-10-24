@@ -1,0 +1,8 @@
+services:
+  ncmapi:
+    image: binaryify/netease_cloud_music_api
+    container_name: ncm_api
+    ports:
+      - '3001:3000'
+    restart: unless-stopped
+    network_mode: bridge
