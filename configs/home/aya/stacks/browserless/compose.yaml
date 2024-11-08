@@ -1,0 +1,11 @@
+services:
+  browserless:
+    container_name: browserless
+    image: ghcr.io/browserless/chromium
+    network_mode: bridge
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    environment:
+      - CONCURRENT=10
+      - TOKEN=6R0W53R135510
