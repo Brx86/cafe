@@ -1,4 +1,4 @@
-#
+# 
 # /etc/pacman.conf
 #
 # See the pacman.conf(5) manpage for option and repository directives
@@ -12,6 +12,7 @@
 #RootDir     = /
 #DBPath      = /var/lib/pacman/
 #CacheDir    = /var/cache/pacman/pkg/
+#CacheDir    = /tmp/pacman/pkg/
 #LogFile     = /var/log/pacman.log
 #GPGDir      = /etc/pacman.d/gnupg/
 #HookDir     = /etc/pacman.d/hooks/
@@ -22,7 +23,10 @@ HoldPkg     = pacman glibc
 Architecture = auto
 
 # Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
-IgnorePkg   = linux-lts pacman
+#IgnorePkg   = v2raya nomachine yuzu util-linux util-linux-libs
+#IgnorePkg = v2raya nomachine yuzu yuzu-early-access linux-lts linux-lts-headers
+IgnorePkg = nomachine linux-lts linux-lts-headers mpv-uosc-git chromium pacman dae
+#IgnorePkg = nomachine yuzu yuzu-early-access linux-lts linux-lts-headers mpv-uosc-git
 #IgnoreGroup =
 
 #NoUpgrade   =
@@ -40,11 +44,7 @@ ILoveCandy
 # By default, pacman accepts packages signed by keys that its local keyring
 # trusts (see pacman-key and its man page), as well as unsigned packages.
 SigLevel = Never
-#SigLevel    = Required DatabaseOptional
 LocalFileSigLevel = Never
-#SigLevel = Optional
-#RemoteFileSigLevel = Never
-#SigLevel = Required
 
 # NOTE: You must run `pacman-key --init` before first using pacman; the local
 # keyring can then be populated with the keys of all official Arch Linux
@@ -73,14 +73,11 @@ LocalFileSigLevel = Never
 # repo name header and Include lines. You can add preferred servers immediately
 # after the header, and they will be used before the default mirrors.
 
-#[core-testing]
+#[testing]
 #Include = /etc/pacman.d/mirrorlist
 
 [core]
 Include = /etc/pacman.d/mirrorlist
-
-#[extra-testing]
-#Include = /etc/pacman.d/mirrorlist
 
 [extra]
 Include = /etc/pacman.d/mirrorlist
@@ -91,10 +88,17 @@ Include = /etc/pacman.d/mirrorlist
 #[multilib-testing]
 #Include = /etc/pacman.d/mirrorlist
 
-#[multilib]
-#Include = /etc/pacman.d/mirrorlist
+[multilib]
+Include = /etc/pacman.d/mirrorlist
+
+# An example of a custom package repository.  See the pacman manpage for
+# tips on creating your own repositories.
+#[custom]
+#SigLevel = Optional TrustAll
+#Server = file:///home/custompkgs
 
 [archlinuxcn]
-SigLevel = Never
-Server = https://mirrors.bfsu.edu.cn/archlinuxcn/$arch
 Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
+Server = https://mirrors.bfsu.edu.cn/archlinuxcn/$arch
+Server = https://mirrors.xtom.us/archlinuxcn/$arch
+Server = https://mirrors.xtom.de/archlinuxcn/$arch
