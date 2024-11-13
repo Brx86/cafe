@@ -1,0 +1,12 @@
+services:
+  reader:
+    image: hectorqin/reader:openj9-latest
+    container_name: reader
+    volumes:
+      - ./log:/log
+      - ./storage:/storage
+      - ./docs:/docs
+    ports:
+      - 6080:8080
+    network_mode: bridge
+    restart: unless-stopped
