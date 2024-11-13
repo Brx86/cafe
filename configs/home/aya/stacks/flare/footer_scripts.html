@@ -1,0 +1,15 @@
+<script>
+// 判断当前地址是否为 10.8.2.5
+if (window.location.hostname !== "10.8.2.5") {
+  // 获取页面中所有的a标签
+  const allLinks = document.querySelectorAll('a');
+  for (let i = 0; i < allLinks.length; i++) {
+    const currentHref = allLinks[i].getAttribute('href');
+    if (currentHref) {
+      // 进行替换操作
+      const newHref = currentHref.replace('10.8.2.5', window.location.hostname);
+      allLinks[i].setAttribute('href', newHref);
+    }
+  }
+}
+</script>

@@ -1,0 +1,24 @@
+Title: Aya's Flare
+Footer: "由 <a href=\"https://github.com/soulteary/docker-flare\">Aya</a> ♡ 强力驱动\r\n<script>\r\n//
+  判断当前地址是否为 10.8.2.5\r\nif (window.location.hostname !== \"10.8.2.5\") {\r\n  // 获取页面中所有的a标签\r\n
+  \ const allLinks = document.querySelectorAll('a');\r\n  for (let i = 0; i < allLinks.length;
+  i++) {\r\n    const currentHref = allLinks[i].getAttribute('href');\r\n    if (currentHref)
+  {\r\n      // 进行替换操作\r\n      const newHref = currentHref.replace('10.8.2.5', window.location.hostname);\r\n
+  \     allLinks[i].setAttribute('href', newHref);\r\n    }\r\n  }\r\n}\r\n</script>"
+OpenAppNewTab: true
+OpenBookmarkNewTab: true
+ShowTitle: true
+Greetings: Aya 早上好~;Aya 中午好~;Aya 下午好~;Aya 晚上好 ♡
+ShowSearchComponent: false
+DisabledSearchAutoFocus: false
+ShowDateTime: true
+ShowApps: true
+ShowBookmarks: true
+HideSettingButton: true
+HideHelpButton: true
+Theme: gazette
+ShowWeather: true
+Location: 北京市
+EnableEncryptedLink: false
+IconMode: DEFAULT
+KeepLetterCase: true
