@@ -1,0 +1,12 @@
+:2001 {
+	route /classic/* {
+		uri strip_prefix /classic
+		reverse_proxy localhost:2000
+	}
+	route /* {
+		reverse_proxy /api/* localhost:2000
+		root * /var/www/qb-web
+		file_server
+	}
+	encode gzip
+}
