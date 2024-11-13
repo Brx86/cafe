@@ -1,0 +1,18 @@
+categories:
+- id: "1"
+  title: 动画
+- id: "2"
+  title: 链接分类2
+- id: "3"
+  title: 链接分类3
+- id: "4"
+  title: 链接分类4
+links:
+- name: 混沌武士
+  link: https://www.bilibili.com/video/BV1Yx4y1J7AH?p=29
+  icon: televisionPlay
+  category: "1"
+- name: 里世界郊游
+  link: https://www.zkk79.com/dongman/5234.html
+  icon: televisionPlay
+  category: "1"

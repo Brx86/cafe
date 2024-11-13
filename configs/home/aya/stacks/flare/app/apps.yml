@@ -1,0 +1,45 @@
+links:
+- name: Dockge
+  link: http://10.8.2.5:5001/
+  icon: docker
+  desc: Compose 管理
+- name: Dozzle
+  link: http://10.8.2.5:5080/
+  icon: docker
+  desc: Docker 日志
+- name: Alist
+  link: http://10.8.2.5:5244/
+  icon: cloud
+  desc: 网盘挂载
+- name: Dufs
+  link: http://10.8.2.5:5000/
+  icon: folder
+  desc: 文件列表
+- name: AyaNote
+  link: http://10.8.2.5:6606/
+  icon: notebook
+  desc: 思源笔记
+- name: Memos
+  link: http://10.8.2.5:5230/
+  icon: calendar
+  desc: 单人微博
+- name: PBH
+  link: http://10.8.2.5:9898/
+  icon: close
+  desc: 吸血杀手
+- name: qBit
+  link: http://10.8.2.5:2000/
+  icon: download
+  desc: BT 下载
+- name: Ainfo
+  link: http://10.8.2.1:1224/
+  icon: memory
+  desc: 电脑状态
+- name: Ollama
+  link: http://10.8.2.5:3000/
+  icon: checkboxMultipleBlankCircleOutline
+  desc: 私人Gemma2
+- name: Reader
+  link: http://10.8.2.5:6080/
+  icon: bookOpenPageVariantOutline
+  desc: 开源阅读
