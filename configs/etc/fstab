@@ -4,19 +4,19 @@
 # <file system> <dir> <type> <options> <dump> <pass>
 
 # /dev/nvme0n1p2 root
-UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/         		btrfs	rw,noatime,ssd,nodiscard,space_cache=v2,subvol=/@root		0 0
+UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/         		btrfs	rw,noatime,ssd,space_cache=v2,subvol=/@root		0 0
 
 # /dev/nvme0n1p2 home
-UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/home     		btrfs	rw,noatime,ssd,nodiscard,space_cache=v2,subvol=/@home		0 0
+UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/home     		btrfs	rw,noatime,ssd,space_cache=v2,subvol=/@home		0 0
 
 # /dev/nvme0n1p2 log
-UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/log		btrfs	rw,noatime,ssd,nodiscard,space_cache=v2,subvol=/@var-log    0 0
+UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/log		btrfs	rw,noatime,ssd,space_cache=v2,subvol=/@var-log    0 0
 
 # /dev/nvme0n1p2 cache
-UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/cache		btrfs	rw,noatime,ssd,nodiscard,space_cache=v2,subvol=/@var-cache	0 0
+UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/cache		btrfs	rw,noatime,ssd,space_cache=v2,subvol=/@var-cache	0 0
 
 # /dev/nvme0n1p2 docker
-UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/lib/docker		btrfs	rw,noatime,ssd,nodiscard,space_cache=v2,subvol=/@docker		0 0
+UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/lib/docker		btrfs	rw,noatime,ssd,space_cache=v2,subvol=/@docker		0 0
 
 # /dev/nvme0n1p1
 # UUID=5241-5BDB      	/efi      	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
@@ -25,4 +25,4 @@ UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/lib/docker		btrfs	rw,noatime,ssd,
 /@swap/swapfile     	none      	swap      	defaults  	0 0
 
 # /dev/sda1 LABEL=Data
-UUID=33a9c2f2-79c1-47e1-8e33-ad59bc9ef1c8	/home/aya/Downloads/data	btrfs	rw,noatime,compress=zstd:1,nodiscard,space_cache=v2,subvol=/	0 3
+UUID=33a9c2f2-79c1-47e1-8e33-ad59bc9ef1c8	/home/aya/Downloads/data	btrfs	rw,noatime,compress=zstd:1,space_cache=v2,subvol=/	0 3
