@@ -68,7 +68,7 @@ zinit light atuinsh/atuin
 
 # 加载 OMZ 框架及部分插件
 zinit snippet OMZ::lib/completion.zsh
-zinit snippet OMZ::lib/history.zsh
+#zinit snippet OMZ::lib/history.zsh
 zinit snippet OMZ::lib/key-bindings.zsh
 zinit snippet OMZ::lib/theme-and-appearance.zsh
 zinit snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
@@ -78,7 +78,8 @@ zinit snippet /usr/share/doc/pkgfile/command-not-found.zsh
 # p10k 主题
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+eval "$(pay-respects zsh --alias)"
 export PATH="$HOME/.local/bin:$PATH"
 ### End of Zinit's installer chunk
