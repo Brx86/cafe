@@ -26,3 +26,6 @@ UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/lib/docker		btrfs	rw,noatime,ssd,
 
 # /dev/sda1 LABEL=Data
 UUID=33a9c2f2-79c1-47e1-8e33-ad59bc9ef1c8	/home/aya/Downloads/data	btrfs	rw,noatime,compress=zstd:1,space_cache=v2,subvol=/	0 3
+
+# loop iso
+#/home/aya/Downloads/debian-10.10.0-amd64-xfce-CD-1.iso	/mnt	iso9660	defaults,ro,loop 0 2
