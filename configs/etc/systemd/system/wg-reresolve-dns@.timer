@@ -1,0 +1,11 @@
+[Unit]
+Description=wg-reresolve-dns@ timer
+
+[Timer]
+Unit=wg-reresolve-dns@%i.service
+OnBootSec=2min
+OnUnitActiveSec=30s
+Persistent=true
+
+[Install]
+WantedBy=timers.target
