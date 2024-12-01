@@ -1,0 +1,31 @@
+#!/bin/python
+
+import os, re, sys
+
+
+def add_config(text, tab, add):
+    text = "# " + text.replace("#", "").strip() if "#" in text else text.strip()
+    lines.append(" " * 4 * tab + text)
+    return tab + add
+
+
+if code := os.system("dae validate -c " + sys.argv[1]) != 0:
+    exit(code)
+
+with open(sys.argv[1], "r") as f:
+    tab = 0
+    lines = []
+    for line in f:
+        if re.findall(r"^(\w+)\s*{\s*$", line):
+            tab = add_config(line, tab, 1)
+        elif "(" in line and ")" in line:
+            add_config(line, tab, 0)
+        elif "{" in line or "(" in line and ")" not in line:
+            tab = add_config(line, tab, 1)
+        elif "}" in line or ")" in line:
+            tab = add_config(line, tab - 1, 0)
+        else:
+            add_config(line, tab, 0)
+print("\n".join(lines))
+with open(sys.argv[1], "w") as f:
+    f.write("\n".join(lines))
