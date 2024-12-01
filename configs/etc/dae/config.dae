@@ -56,7 +56,7 @@ routing {
     pname(systemd-resolved) -> must_direct
     l4proto(udp) && dport(443) -> block
     dip(geoip:private) -> direct
-
+    
     # 自定义分流
     pname(ayaping, qbittorrentee, gg, node) -> direct
     domain(geosite:"category-ads-all") -> block
