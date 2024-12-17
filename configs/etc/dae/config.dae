@@ -44,10 +44,16 @@ group {
         filter: name(keyword: '美国')
         policy: min_avg10
     }
+    jm {
+    	filter: name(keyword: '新加坡')
+        policy: min_avg10
+    }
     proxy {
         # filter: subtag(fei) && name(keyword: '新加坡', keyword: '日本')
         # filter: name(keyword: '香港', keyword: '日本', keyword: '台湾', keyword: '韩国')
         # policy: fixed(0)
+        filter: subtag(cent)
+        filter: subtag(fei) [add_latency: 500ms]
         policy: min_avg10
     }
 }
@@ -63,6 +69,7 @@ routing {
     # dip(47.80.0.4, 220.130.108.125, 43.132.187.10) -> direct  KR 阿里云
     domain(ip.aya1.de,aya1.eu.org,ayatale.eu.org) -> direct
     domain(geosite:openai) -> gpt
+    domain(18comic.vip,keyword:jcomic) -> jm
     domain(
         akamaihd.net,
         akamaized.net,
@@ -75,6 +82,7 @@ routing {
         dreamtonics.com.cn,
         ghp.ci,
         hdslb.com,
+        oryoy.com,
         solidot.org,
         steamdb.info,
         steamserver.net,
