@@ -23,7 +23,7 @@ global {
     utls_imitate: chrome_auto
 }
 
-# See https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/dns.md for full examples.
+# See https://github.com/daeuniverse/dae/blob/main/docs/zh/configuration/dns.md for examples.
 dns {
     ipversion_prefer: 4
     upstream {
@@ -44,8 +44,8 @@ group {
         filter: name(keyword: '美国')
         policy: min_avg10
     }
-    jm {
-    	filter: name(keyword: '新加坡')
+    meta {
+        filter: name(keyword: '新加坡')
         policy: min_avg10
     }
     proxy {
@@ -58,18 +58,19 @@ group {
     }
 }
 
+# See https://github.com/daeuniverse/dae/blob/main/docs/zh/configuration/routing.md for examples.
 routing {
     pname(systemd-resolved) -> must_direct
     l4proto(udp) && dport(443) -> block
     dip(geoip:private) -> direct
-    
+    domain(geosite:"category-ads-all") -> block
+
     # 自定义分流
     pname(ayaping, qbittorrentee, gg, node) -> direct
-    domain(geosite:"category-ads-all") -> block
-    # dip(47.80.0.4, 220.130.108.125, 43.132.187.10) -> direct  KR 阿里云
+    # dip(47.80.0.4, 220.130.108.125, 43.132.187.10) -> direct # kr ali
     domain(ip.aya1.de,aya1.eu.org,ayatale.eu.org) -> direct
     domain(geosite:openai) -> gpt
-    domain(18comic.vip,keyword:jcomic) -> jm
+    domain(18comic.vip,keyword:jcomic,domain:meta) -> meta
     domain(
         akamaihd.net,
         akamaized.net,
@@ -90,6 +91,7 @@ routing {
         test-ipv6.com,
         zu1k.com
     ) -> direct
+
     dip(geoip:cn) -> direct
     domain(geosite:cn) -> direct
     fallback: proxy
