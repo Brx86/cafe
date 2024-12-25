@@ -4,8 +4,8 @@ import os, re, sys
 
 
 def add_config(text, tab, add):
-    text = "# " + text.replace("#", "").strip() if "#" in text else text.strip()
-    lines.append(" " * 4 * tab + text)
+    text = "# " + text.strip(" #\t\r\n") if "#" in text else text.strip()
+    lines.append(" " * 4 * tab + text if text else "")
     return tab + add
 
 
