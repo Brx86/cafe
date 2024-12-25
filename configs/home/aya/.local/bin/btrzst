@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if stat $1 ; then
+	sudo btrfs property set $1 compression zstd
+	sudo btrfs filesystem defragment -r -v -czstd $1 >/dev/null
+	sudo compsize -x $1
+fi
