@@ -9,7 +9,7 @@ Address=10.0.0.1/24
 DHCPServer=true
 MulticastDNS=yes
 IPMasquerade=both
-IPv6SendRA=yes
+IPv6SendRA=no
 DHCPv6PrefixDelegation=yes
 
 [DHCPServer]
