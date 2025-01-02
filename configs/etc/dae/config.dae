@@ -56,7 +56,7 @@ group {
 
 # See https://github.com/daeuniverse/dae/blob/main/docs/zh/configuration/routing.md for examples.
 routing {
-    pname(systemd-resolved) -> must_direct
+    pname(iwd,systemd-resolved,systemd-networkd) -> must_direct
     l4proto(udp) && dport(443) -> block
     dip(geoip:private) -> direct
     domain(geosite:"category-ads-all") -> block
