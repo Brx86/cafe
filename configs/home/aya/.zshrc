@@ -14,7 +14,6 @@ alias naliu='nali update;rm -f ~/.local/share/nali/Geo*;wget https://github.com/
 alias -g -- -h='-h 2>&1 | bat --language=help --style=plain --paging=never'
 alias -g -- --help='--help 2>&1 | bat --language=help --style=plain --paging=never'
 dg(){dog $@|nali}
-
 killport(){echo "Killing port $1"&&kill -9 `lsof -t -i:$1`; }
 
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -78,8 +77,8 @@ zinit snippet /usr/share/doc/pkgfile/command-not-found.zsh
 # p10k 主题
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
-
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# the fuck
 eval "$(pay-respects zsh --alias)"
-export PATH="$HOME/.local/bin:$PATH"
 ### End of Zinit's installer chunk
