@@ -1,0 +1,11 @@
+services:
+  bot:
+    container_name: music163bot
+#    image: ghcr.io/xiaomengxinx/music163bot-go
+    image: music163bot-self:1.3
+    volumes:
+      - ./config.ini:/app/config.ini
+      - ./cache:/app/cache
+      - ./log:/app/log
+    network_mode: bridge
+    restart: unless-stopped
