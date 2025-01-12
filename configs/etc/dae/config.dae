@@ -65,7 +65,7 @@ routing {
     # 自定义分流
     pname(ayaping, qbittorrentee, gg, node) -> direct
     # dip(47.80.0.4, 220.130.108.125, 43.132.187.10) -> direct # kr ali
-    domain(ip.aya1.de,r.aya1.de,aya1.eu.org,ayatale.eu.org) -> direct
+    domain(ip.aya1.de,r.aya1.de,aya1.eu.org) -> direct
     domain(
         18comic.vip,
         keyword:jcomic,
