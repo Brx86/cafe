@@ -57,14 +57,14 @@ group {
 # See https://github.com/daeuniverse/dae/blob/main/docs/zh/configuration/routing.md for examples.
 routing {
     mac('b0:25:aa:74:47:8b') -> must_direct
-    pname(iwd,systemd-resolve,systemd-network,systemd-resolved,systemd-networkd) -> must_direct
+    pname(ssh,iwd,systemd-resolve,systemd-network,systemd-resolved,systemd-networkd) -> must_direct
     l4proto(udp) && dport(443) -> block
     dip(geoip:private) -> direct
     domain(geosite:"category-ads-all") -> block
 
     # 自定义分流
     pname(ayaping, qbittorrentee, gg, node) -> direct
-    # dip(47.80.0.4, 220.130.108.125, 43.132.187.10) -> direct # kr ali
+    # dip(95.216.144.0/24, 47.80.0.4, 220.130.108.125, 43.132.187.10) -> direct # kr ali
     domain(ip.aya1.de,r.aya1.de,aya1.eu.org) -> direct
     domain(
         18comic.vip,
