@@ -1,3 +1,4 @@
+abbr "auru"="updpkgsums && makepkg --printsrcinfo | tee .SRCINFO"
 abbr "c"="cd .."
 abbr "cache"="fd . ~/.cache -d1 -E 'gitstatus' -E 'p10k*' -E 'zinit' -E 'tealdeer' -X rm -rf"
 abbr "cg"="curl google.com"
