@@ -1,13 +1,10 @@
-if [ -z "$DISPLAY" ] ; then
-    export LANG=C
-fi
 #fastfetch -c /usr/share/fastfetch/presets/examples/14.jsonc
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 alias clip='curl -F c=@- "https://fars.ee/?u=1"'
-alias dufa='LANG=C duf -only local'
+alias dufl='LANG=C duf -only local'
 alias ip='ip --color'
 alias ll='exa -lh --time-style long-iso --icons'
 alias naliu='nali update;rm -f ~/.local/share/nali/Geo*;wget https://github.com/P3TERX/GeoLite.mmdb/releases/latest/download/GeoLite2-City.mmdb -P ~/.local/share/nali -q --show-progres'
