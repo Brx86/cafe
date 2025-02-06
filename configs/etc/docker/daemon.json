@@ -1,5 +1,7 @@
 {
   "storage-driver": "btrfs",
-  "ipv6": true,
-  "fixed-cidr-v6": "2001:db8:1::/64"
+  "ipv6": false,
+  "fixed-cidr-v6": "2001:db8:1::/64",
+  "log-driver":"json-file",
+  "log-opts": {"max-size":"10m", "max-file":"3"}
 }
