@@ -9,7 +9,7 @@ global {
     log_level: info
     disable_waiting_network: false
     lan_interface: eth0, docker0, br-5264eedd3b9f
-    wan_interface: auto
+    wan_interface: wlan0, eth1
     auto_config_kernel_parameter: true
     tcp_check_url: 'https://cp.cloudflare.com'
     tcp_check_http_method: HEAD
