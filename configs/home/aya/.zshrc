@@ -1,4 +1,4 @@
-#fastfetch -c /usr/share/fastfetch/presets/examples/14.jsonc
+fastfetch -c /usr/share/fastfetch/presets/examples/14.jsonc
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -11,6 +11,7 @@ alias naliu='nali update;rm -f ~/.local/share/nali/Geo*;wget https://github.com/
 alias -g -- -h='-h 2>&1 | bat --language=help --style=plain --paging=never'
 alias -g -- --help='--help 2>&1 | bat --language=help --style=plain --paging=never'
 dg(){dog $@|nali}
+get_pacman(){(url=https://mirror.cachyos.org/repo/x86_64/cachyos/;sudo pacman -U $url$(curl -s $url|perl -ne 'print "$1" if /title="(pacman.*?zst)"/'))}
 killport(){echo "Killing port $1"&&kill -9 `lsof -t -i:$1`; }
 
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
