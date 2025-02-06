@@ -6,7 +6,7 @@ DHCP=yes
 IPv6AcceptRA=no
 
 [DHCPv4]
-RouteMetric=99
+RouteMetric=699
 
 [IPv6AcceptRA]
-RouteMetric=99
+RouteMetric=699
