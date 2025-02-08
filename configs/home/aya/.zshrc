@@ -1,4 +1,7 @@
-fastfetch -c /usr/share/fastfetch/presets/examples/14.jsonc
+if [[ -z "$TMUX" ]]; then
+    fastfetch -c /usr/share/fastfetch/presets/examples/14.jsonc
+fi
+
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
