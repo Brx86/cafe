@@ -7,6 +7,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 alias clip='curl -F c=@- "https://fars.ee/?u=1"'
+alias clip2='curl -F file=@- https://envs.sh'
 alias dufl='LANG=C duf -only local'
 alias ip='ip --color'
 alias ll='exa -lh --time-style long-iso --icons'
