@@ -13,7 +13,7 @@
 }
 # flare no CSP
 :5005 {
-    encode gzip
+	encode gzip
 	reverse_proxy localhost:55005 {
 		header_down Content-Security-Policy "script-src 'none'; " ""
 	}
