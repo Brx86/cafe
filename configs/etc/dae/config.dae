@@ -8,9 +8,10 @@ global {
     so_mark_from_dae: 0
     log_level: info
     disable_waiting_network: false
-#    lan_interface: enp1s0, docker0, br-5264eedd3b9f
+    # lan_interface: enp1s0, docker0, br-5264eedd3b9f
     lan_interface: docker0, br-5264eedd3b9f
-    wan_interface: wlan0, enp0s20f0u4
+    #wan_interface: wlan0, enp0s20f0u
+    wan_interface: wlan0
     auto_config_kernel_parameter: true
     tcp_check_url: 'https://cp.cloudflare.com'
     tcp_check_http_method: HEAD
