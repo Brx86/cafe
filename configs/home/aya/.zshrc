@@ -8,10 +8,11 @@ fi
 
 alias clip='curl -F c=@- "https://fars.ee/?u=1"'
 alias clip2='curl -F file=@- https://envs.sh'
-alias dufl='LANG=C duf -only local'
+alias dufl='LANG=C duf -only local,network -hide-mp "/var*"'
 alias ip='ip --color'
 alias ll='exa -lh --time-style long-iso --icons'
 alias naliu='nali update;rm -f ~/.local/share/nali/Geo*;wget https://github.com/P3TERX/GeoLite.mmdb/releases/latest/download/GeoLite2-City.mmdb -P ~/.local/share/nali -q --show-progres'
+alias rgn='rg --no-line-number --no-filename'
 alias -g -- -h='-h 2>&1 | bat --language=help --style=plain --paging=never'
 alias -g -- --help='--help 2>&1 | bat --language=help --style=plain --paging=never'
 dg(){dog $@|nali}
