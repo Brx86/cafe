@@ -1,0 +1,9 @@
+services:
+  ayatem:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "25000:8080"
+    restart: unless-stopped
+    network_mode: bridge

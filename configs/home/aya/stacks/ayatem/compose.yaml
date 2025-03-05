@@ -1,0 +1,15 @@
+services:
+  ayatem:
+    build:
+      context: .
+      dockerfile: Dockerfile
+#    ports:
+#      - "25000:5000"
+    container_name: tem-aya
+    restart: always
+    network_mode: inet
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0  # 允许从外部访问
+#    volumes:
+#      - .:/app  # 将本地代码挂载到容器中，方便开发

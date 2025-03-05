@@ -1,0 +1,12 @@
+services:
+  alpine-rsync:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "2022:22"
+    volumes:
+      - ./data:/home/aya/data
+    container_name: rsync-aya
+    restart: unless-stopped
+    network_mode: inet
