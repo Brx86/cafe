@@ -21,7 +21,7 @@
 # marimo app
 :2717 {
 	route /sz* {
-		reverse_proxy localhost:2719
+		reverse_proxy localhost:22719
 	}
 	route /hex2int* {
 		reverse_proxy localhost:22720
