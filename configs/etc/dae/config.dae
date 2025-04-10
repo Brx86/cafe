@@ -9,8 +9,8 @@ global {
     log_level: info
     disable_waiting_network: false
     # lan_interface: enp1s0, docker0, br-5264eedd3b9f
-    lan_interface: docker0, br-5264eedd3b9f
-    #wan_interface: wlan0, enp0s20f0u
+    lan_interface: docker0, br-5264eedd3b9f, enp1s0
+    # wan_interface: wlan0, enp0s20f0u
     wan_interface: wlan0
     auto_config_kernel_parameter: true
     tcp_check_url: 'https://cp.cloudflare.com'
@@ -29,12 +29,12 @@ global {
 dns {
     ipversion_prefer: 4
     upstream {
-        alidns: 'udp://114.114.114.114:53'
+        alidns: 'tcp://114.114.114.114:53'
         googledns: 'tcp://8.8.8.8:53'
     }
     routing {
         request {
-            qname(suffix: shakaianee.top) -> alidns
+            qname(suffix: shakaianee.top, suffix: inetech.fun) -> alidns
             qname(geosite:cn, geosite:bing) -> alidns
             fallback: googledns
         }
@@ -58,7 +58,7 @@ group {
 
 # See https://github.com/daeuniverse/dae/blob/main/docs/zh/configuration/routing.md for examples.
 routing {
-    mac('b0:25:aa:74:47:8b') -> must_direct
+#    mac('b0:25:aa:74:47:8b') -> must_direct
     pname(ssh,iwd,systemd-resolve,systemd-network,systemd-resolved,systemd-networkd) -> must_direct
     l4proto(udp) && dport(443) -> block
     dip(geoip:private) -> direct
@@ -67,18 +67,20 @@ routing {
     # 自定义分流
     pname(ayaping, qbittorrentee, gg, node) -> direct
     # dip(95.216.144.0/24, 47.80.0.4, 220.130.108.125, 43.132.187.10) -> direct # kr ali
-    domain(ip.aya1.de,r.aya1.de,aya1.eu.org) -> direct
+    domain(ip.aya1.de,r.aya1.de,aya1.eu.org,ayatale.eu.org) -> direct
     domain(
         18comic.vip,
         keyword:jcomic,
-        domain:meta,
-        domain:github
+        geosite:meta,
+        geosite:github,
+        keyword:google
     ) -> sg
     domain(
         geosite:bing,
         geosite:category-games@cn,
         cdn.nlark.com,
         cdn.onesignal.com,
+        cdnlz12.com,
         decart.ai,
         doubao.com,
         dreamtonics.com.cn,
