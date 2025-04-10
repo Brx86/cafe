@@ -18,6 +18,7 @@ alias -g -- --help='--help 2>&1 | bat --language=help --style=plain --paging=nev
 dg(){dog $@|nali}
 get_pacman(){(url=https://mirror.cachyos.org/repo/x86_64/cachyos/;sudo pacman -U $url$(curl -s $url|perl -ne 'print "$1" if /title="(pacman.*?zst)"/'))}
 killport(){echo "Killing port $1"&&kill -9 `lsof -t -i:$1`; }
+y(){rg $@ ~/Downloads/ayat-bk/git/tg_tldr_bot/yu|perl -ne 'print $1=~s/\\n/\n/gr."\n\n" if $.%2==0 && /: "(.*)"/'}
 
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
