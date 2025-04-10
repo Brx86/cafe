@@ -26,6 +26,9 @@
 	route /hex2int* {
 		reverse_proxy localhost:22720
 	}
+	route /xlsx* {
+		reverse_proxy localhost:22721
+	}
 	reverse_proxy localhost:2718
 	encode gzip
 }
