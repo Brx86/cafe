@@ -50,7 +50,7 @@ group {
         # filter: subtag(fei) && name(keyword: '新加坡', keyword: '日本')
         # filter: name(keyword: '香港', keyword: '日本', keyword: '台湾', keyword: '韩国')
         # policy: fixed(0)
-        filter: subtag(cent) && !name(keyword: '亚马逊', keyword: '套餐', keyword: '剩余')
+        filter: subtag(cent) && !name(keyword: '亚马逊', keyword: '套餐', keyword: '剩余', keyword: '香港')
         # filter: subtag(fei) [add_latency: 500ms]
         policy: min_avg10
     }
@@ -72,8 +72,9 @@ routing {
         18comic.vip,
         keyword:jcomic,
         geosite:meta,
-        geosite:github,
-        keyword:google
+        #geosite:github,
+        keyword:google,
+        keyword:vrchat
     ) -> sg
     domain(
         geosite:bing,
@@ -90,6 +91,7 @@ routing {
         solidot.org,
         steamdb.info,
         steamserver.net,
+        sign.lagrangecore.org,
         keyword: syncthing,
         test-ipv6.com,
         zu1k.com
