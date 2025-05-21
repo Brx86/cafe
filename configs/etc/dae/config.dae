@@ -46,6 +46,10 @@ group {
         filter: name(keyword: '新加坡')
         policy: min_avg10
     }
+    ss {
+        filter: name(keyword: '新加坡')
+        policy: fixed(0)
+    }
     proxy {
         # filter: subtag(fei) && name(keyword: '新加坡', keyword: '日本')
         # filter: name(keyword: '香港', keyword: '日本', keyword: '台湾', keyword: '韩国')
@@ -68,11 +72,12 @@ routing {
     pname(ayaping, qbittorrentee, gg, node) -> direct
     # dip(95.216.144.0/24, 47.80.0.4, 220.130.108.125, 43.132.187.10) -> direct # kr ali
     domain(ip.aya1.de,r.aya1.de,aya1.eu.org,ayatale.eu.org) -> direct
+    domain(geosite:huggingface)->ss
     domain(
         18comic.vip,
         keyword:jcomic,
         geosite:meta,
-        #geosite:github,
+        # geosite:github,
         keyword:google,
         keyword:vrchat
     ) -> sg
