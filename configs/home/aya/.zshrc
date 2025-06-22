@@ -5,20 +5,21 @@ fi
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
 alias clip='curl -F c=@- "https://fars.ee/?u=1"'
 alias clip2='curl -F file=@- https://envs.sh'
+alias clip3='curl -X PUT http://pb.aya1.de --data-binary @-'
 alias dufl='LANG=C duf -only local,network -hide-mp "/var*"'
 alias ip='ip --color'
 alias ll='exa -lh --time-style long-iso --icons'
-alias naliu='nali update;rm -f ~/.local/share/nali/Geo*;wget https://github.com/P3TERX/GeoLite.mmdb/releases/latest/download/GeoLite2-City.mmdb -P ~/.local/share/nali -q --show-progres'
+alias naliu='nali update;rm -f ~/.local/share/nali/Geo*;wget https://github.com/P3TERX/GeoLite.mmdb/releases/latest/download/GeoLite2-City.mmdb -P ~/.local/share/nali -q --show-progress'
 alias rgn='rg --no-line-number --no-filename'
 alias -g -- -h='-h 2>&1 | bat --language=help --style=plain --paging=never'
 alias -g -- --help='--help 2>&1 | bat --language=help --style=plain --paging=never'
 dg(){dog $@|nali}
 get_pacman(){(url=https://mirror.cachyos.org/repo/x86_64/cachyos/;sudo pacman -U $url$(curl -s $url|perl -ne 'print "$1" if /title="(pacman.*?zst)"/'))}
 killport(){echo "Killing port $1"&&kill -9 `lsof -t -i:$1`; }
-y(){rg $@ ~/Downloads/ayat-bk/git/tg_tldr_bot/yu|perl -ne 'print $1=~s/\\n/\n/gr."\n\n" if $.%2==0 && /: "(.*)"/'}
+sn(){sudo btrfs su sn -r @root-$1 @root-$1-r && sudo btrfs su sn -r @home-$1 @home-$1-r}
+y(){rg $@ ~/Downloads/bk/ayat-bk/git/tg_tldr_bot/yu|perl -ne 'print $1=~s/\\n/\n/gr."\n\n" if $.%2==0 && /: "(.*)"/'}
 
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -27,7 +28,15 @@ if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
         print -P "%F{33} %F{34}Installation successful.%f%b" || \
         print -P "%F{160} The clone has failed.%f%b"
 fi
-
+function Syu(){
+    sudo pacman -Syu $@  && sync -f /
+    # remove orphans
+    pacman -Qtdq | ifne sudo pacman -Rcs - && sync -f /
+    # remove orphans with circle dependencies
+    comm <(pacman -Qdttq | pacman -Rs --print-format '%n' - | sort) <(pacman -Qdq | pacman -Rsu --print-format '%n' - | sort) -1 -3 | ifne sudo pacman -Rcs - && sync -f /
+    sudo pacman -Fy && sync -f /
+    pacdiff -o
+}
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"
