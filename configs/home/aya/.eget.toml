@@ -1,0 +1,18 @@
+[global]
+target = "~/.local/bin"
+
+["sharkdp/bat"]
+asset_filters = [ "musl.tar.gz" ]
+
+["muesli/duf"]
+asset_filters = [ "x86_64.tar.gz" ]
+
+["fastfetch-cli/fastfetch"]
+asset_filters = [ "tar.gz" ]
+
+["dundee/gdu"]
+asset_filters = [ "static.tgz" ]
+target = "~/.local/bin/gdu"
+
+["astral-sh/uv"]
+asset_filters = [ "musl.tar.gz" ]
