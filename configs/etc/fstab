@@ -25,12 +25,12 @@ UUID=696a5f09-7736-41cb-b028-1f3a3562a06b	/var/lib/docker		btrfs	rw,noatime,ssd,
 /@swap/swapfile     	none      	swap      	defaults  	0 0
 
 # /dev/sda1 LABEL=Data
-UUID=483758f5-0b5b-415f-8a74-d8875615e4bd	/home/aya/Downloads/data	btrfs	rw,noatime,compress=zstd:1,space_cache=v2,subvol=/@data	0 3
+UUID=483758f5-0b5b-415f-8a74-d8875615e4bd	/home/aya/Downloads/data	btrfs	rw,noatime,compress-force=zstd:3,space_cache=v2,subvol=/@data	0 3
 
 # //10.8.1.1/aya
 //10.8.1.2/aya          /home/aya/remote/star		cifs	soft,intr,credentials=/root/.smbcredentials,uid=1000,gid=1000,file_mode=0660,dir_mode=0770,vers=3.0,_netdev,nofail 0 0
 //10.8.1.2/ayah         /home/aya/remote/starh		cifs	soft,intr,credentials=/root/.smbcredentials,uid=1000,gid=1000,file_mode=0660,dir_mode=0770,vers=3.0,_netdev,nofail 0 0
-//192.168.50.7/aya	/home/aya/remote/vkh		cifs	soft,intr,credentials=/root/.smbcredentialsvk,uid=1000,gid=1000,file_mode=0660,dir_mode=0770,vers=3.0,_netdev,nofail 0 0
+#//192.168.50.7/aya	/home/aya/remote/vkh		cifs	soft,intr,credentials=/root/.smbcredentialsvk,uid=1000,gid=1000,file_mode=0660,dir_mode=0770,vers=3.0,_netdev,nofail 0 0
 
 # loop iso
 #/home/aya/Downloads/debian-10.10.0-amd64-xfce-CD-1.iso	/mnt	iso9660	defaults,ro,loop 0 2
