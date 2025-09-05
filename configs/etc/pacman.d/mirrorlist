@@ -1,2 +1,3 @@
-Server = https://mirrors.bfsu.edu.cn/archlinux-archive/2025/06-16/$repo/os/$arch
-Server = https://arch-archive.tuna.tsinghua.edu.cn/2025/06-16/$repo/os/$arch
+#Server = https://mirrors.bfsu.edu.cn/archlinux/$repo/os/$arch
+Server = https://mirrors.bfsu.edu.cn/archlinux-archive/2025/08-11/$repo/os/$arch
+Server = https://arch-archive.tuna.tsinghua.edu.cn/2025/08-11/$repo/os/$arch
