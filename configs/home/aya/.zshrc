@@ -1,6 +1,6 @@
-if [[ -z "$TMUX" ]]; then
-    fastfetch -c /usr/share/fastfetch/presets/examples/14.jsonc
-fi
+#if [[ -z "$TMUX" ]]; then
+#    fastfetch -c /usr/share/fastfetch/presets/examples/14.jsonc
+#fi
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -19,6 +19,7 @@ dg(){dog $@|nali}
 get_pacman(){(url=https://mirror.cachyos.org/repo/x86_64/cachyos/;sudo pacman -U $url$(curl -s $url|perl -ne 'print "$1" if /title="(pacman.*?zst)"/'))}
 killport(){echo "Killing port $1"&&kill -9 `lsof -t -i:$1`; }
 sn(){sudo btrfs su sn -r @root-$1 @root-$1-r && sudo btrfs su sn -r @home-$1 @home-$1-r}
+vget(){N_m3u8DL-RE $(omo "$1") --save-name "$2"}
 y(){rg $@ ~/Downloads/bk/ayat-bk/git/tg_tldr_bot/yu|perl -ne 'print $1=~s/\\n/\n/gr."\n\n" if $.%2==0 && /: "(.*)"/'}
 
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -75,7 +76,7 @@ zinit ice lucid wait='0'
 zinit light olets/zsh-abbr
 
 # atuin 历史
-zinit ice lucid wait='1'
+zinit ice lucid wait='0'
 zinit light atuinsh/atuin
 
 # 加载 OMZ 框架及部分插件
@@ -93,5 +94,5 @@ zinit light romkatv/powerlevel10k
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # the fuck
-eval "$(pay-respects zsh --alias)"
+#eval "$(pay-respects zsh --alias)"
 ### End of Zinit's installer chunk
