@@ -27,34 +27,35 @@ global {
 
 # See https://github.com/daeuniverse/dae/blob/main/docs/zh/configuration/dns.md for examples.
 dns {
-    ipversion_prefer: 4
     upstream {
-        alidns: 'tcp://114.114.114.114:53'
-        googledns: 'tcp://8.8.8.8:53'
+        googledns: 'tcp+udp://dns.google:53'
+        alidns: 'udp://dns.alidns.com:53'
     }
     routing {
         request {
-            qname(suffix: shakaianee.top, suffix: inetech.fun) -> alidns
-            qname(geosite:cn, geosite:bing) -> alidns
-            fallback: googledns
+            fallback: alidns
+        }
+        response {
+            upstream(googledns) -> accept
+            ip(geoip:private) && !qname(geosite:cn) -> googledns
+            fallback: accept
         }
     }
 }
 
 group {
+    # spider {
+        # policy: random
+    # }
     sg {
         filter: name(keyword: '新加坡')
         policy: min_avg10
-    }
-    ss {
-        filter: name(keyword: '新加坡')
-        policy: fixed(0)
     }
     proxy {
         # filter: subtag(fei) && name(keyword: '新加坡', keyword: '日本')
         # filter: name(keyword: '香港', keyword: '日本', keyword: '台湾', keyword: '韩国')
         # policy: fixed(0)
-        filter: subtag(cent) && !name(keyword: '亚马逊', keyword: '套餐', keyword: '剩余', keyword: '香港')
+        filter: subtag(cent) && !name(keyword: '亚马逊', keyword: '套餐', keyword: '剩余', keyword: '香港', keyword: '0.1')
         # filter: subtag(fei) [add_latency: 500ms]
         policy: min_avg10
     }
@@ -63,22 +64,23 @@ group {
 # See https://github.com/daeuniverse/dae/blob/main/docs/zh/configuration/routing.md for examples.
 routing {
     mac('b0:25:aa:74:47:8b') -> must_direct
+    domain('envs.net') -> proxy
     pname(ssh,iwd,systemd-resolve,systemd-network,systemd-resolved,systemd-networkd,dog) -> must_direct
     l4proto(udp) && dport(443) -> block
     dip(geoip:private) -> direct
     domain(geosite:"category-ads-all") -> block
-
     # 自定义分流
     pname(ayaping, qbittorrentee, gg, node) -> direct
     # dip(95.216.144.0/24, 47.80.0.4, 220.130.108.125, 43.132.187.10) -> direct # kr ali
     domain(ip.aya1.de,r.aya1.de,aya1.eu.org,ayatale.eu.org) -> direct
-    domain(geosite:huggingface)->ss
     domain(
-        18comic.vip,
+        # 18comic.vip,
         keyword:jcomic,
         geosite:meta,
-        # geosite:github,
-        keyword:google,
+        geosite:github,
+        #keyword:google,
+        keyword:youtube,
+        keyword:pixverse,
         keyword:vrchat
     ) -> sg
     domain(
@@ -92,6 +94,7 @@ routing {
         dreamtonics.com.cn,
         ghp.ci,
         hdslb.com,
+        libvio.fun,
         oryoy.com,
         solidot.org,
         steamdb.info,
