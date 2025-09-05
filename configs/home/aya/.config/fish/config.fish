@@ -20,21 +20,13 @@ if status is-interactive
     abbr s	'source .venv/bin/activate.fish'
     abbr uvi	'uv pip install'
     zoxide init fish | source
-    # 保存当前命令行内容
-    function push_line
-        set -g _saved_command (commandline)
-        commandline ''
-    end
-    # 执行或恢复命令
-    function execute_or_restore
-        if set -q _saved_command
-            commandline $_saved_command
-            set -e _saved_command # 清除变量
-        else
+    # 在 pwd 中包含 "odin" 字符串时，Ctrl+s 执行 odinfmt 并执行当前命令
+    # 否则，Ctrl+s 执行默认的 forward-search-history
+    bind \cs '
+        if string match -q "*odin*" (pwd)
+            commandline -r "odinfmt -w"
             commandline -f execute
         end
-    end
-    # 绑定键位
-    bind \cq push_line
-    bind \cj execute_or_restore
+    '
+    bind ctrl-c cancel-commandline
 end
