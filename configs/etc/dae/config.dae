@@ -11,7 +11,7 @@ global {
     # lan_interface: enp1s0, docker0, br-5264eedd3b9f
     lan_interface: docker0, br-5264eedd3b9f, enp1s0
     # wan_interface: wlan0, enp0s20f0u
-    wan_interface: wlan0
+    wan_interface: wlp2s0
     auto_config_kernel_parameter: true
     tcp_check_url: 'https://cp.cloudflare.com'
     tcp_check_http_method: HEAD
@@ -70,7 +70,7 @@ routing {
     dip(geoip:private) -> direct
     domain(geosite:"category-ads-all") -> block
     # 自定义分流
-    pname(ayaping, qbittorrentee, gg, node) -> direct
+    pname(ayaping, qbittorrentee, gg, node, N_m3u8DL-RE) -> direct
     # dip(95.216.144.0/24, 47.80.0.4, 220.130.108.125, 43.132.187.10) -> direct # kr ali
     domain(ip.aya1.de,r.aya1.de,aya1.eu.org,ayatale.eu.org) -> direct
     domain(
