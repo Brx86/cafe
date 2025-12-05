@@ -7,8 +7,10 @@ if status is-interactive
     alias clip  'curl -F file=@- https://envs.sh'
     abbr ba     'bat -Sn'
     abbr c      'cd ..'
+    abbr cg     'curl google.com'
     abbr cip    'curl ip.shakaianee.top'
     abbr dk     'docker'
+    abbr es     'exercism submit src/*'
     abbr up     'docker compose up'
     abbr down   'docker compose down'
     abbr logs   'docker compose logs -f'
@@ -23,17 +25,17 @@ if status is-interactive
     # 在 pwd 中包含 "odin" 字符串时，Ctrl+s 执行 odinfmt 并执行当前命令
     # 否则，Ctrl+s 执行默认的 forward-search-history
     bind \cs '
-        if string match -q "*odin*" (pwd)
+        if string match -q "*/odin*" (pwd)
             commandline -r "odinfmt -w"
             commandline -f execute
-        else if string match -q "*er_ln*" (pwd)
+        else if string match -rq ".*er_ln|gleam.*" (pwd)
             commandline -r "gleam format && gleam run"
             commandline -f execute
         end
     '
     bind \cb '
-        if string match -q "*er_ln*" (pwd)
-            commandline -r "gleam run -m gleescript"
+        if string match -rq ".*er_ln|gleam.*" (pwd)
+            commandline -r "gleam build && gleam run -m gleescript"
             commandline -f execute
         end
     '
@@ -42,6 +44,4 @@ if status is-interactive
     function fish_command_not_found
         pacfiles $argv[1] || echo -e "$argv[1] not found!"
     end
-
-    bind ctrl-c cancel-commandline
 end
