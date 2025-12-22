@@ -1,0 +1,35 @@
+#!/usr/bin/bash
+
+LOCK_FILE="/tmp/drop_kitty.wid"
+
+# 从缓存读取 WID
+if [[ -f "$LOCK_FILE" ]]; then
+    wid=$(<"$LOCK_FILE")
+    # 验证该 WID 是否仍然有效（检查对应的进程或窗口是否存在）
+    if ! xwininfo -id "$wid" >/dev/null 2>&1; then
+        wid="" # WID 已失效
+    fi
+fi
+
+if [[ -z "$wid" ]]; then
+    echo "缓存失效，正在搜索窗口"
+    wid=$(xdotool search --class "drop_kitty" 2>/dev/null | tail -n1)
+    if [[ -z "$wid" ]]; then
+        echo "未找到 kitty 窗口，正在启动..."
+        kitty --class "drop_kitty" -o hide_window_decorations=y -1 &>/dev/null &
+        wid=$(xdotool search --sync --class "drop_kitty" 2>/dev/null | tail -n1)
+        wmctrl -i -R $wid -b add,skip_taskbar
+        echo "$wid" > "$LOCK_FILE"
+        exit 0
+    fi
+    echo "$wid" > "$LOCK_FILE"
+fi
+
+if xwininfo -id "$wid" | grep -q "IsViewable"; then
+    echo "正在隐藏 kitty..."
+    xdotool windowminimize "$wid"
+else
+    echo "将 kitty 移至当前工作区..."
+    current_desktop=$(xdotool get_desktop)
+    xdotool set_desktop_for_window "$wid" "$current_desktop" windowactivate "$wid"
+fi
