@@ -10,7 +10,7 @@ global {
     disable_waiting_network: false
     # lan_interface: enp1s0, docker0, br-5264eedd3b9f
     # wan_interface: wlan0, enp0s20f0u
-    lan_interface: docker0, br-5264eedd3b9f, enp1s0
+    lan_interface: docker0, br-5264eedd3b9f, enp1s0, br-473650bdf32e 
     wan_interface: wlan0
     auto_config_kernel_parameter: true
     tcp_check_url: 'https://cp.cloudflare.com'
@@ -78,7 +78,7 @@ routing {
         keyword:jcomic,
         geosite:meta,
         geosite:github,
-        #keyword:google,
+        keyword:google,
         keyword:youtube,
         keyword:pixverse,
         keyword:vrchat
