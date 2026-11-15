@@ -16,7 +16,7 @@ from pathlib import Path
 from subprocess import run
 
 base = "/home/aya/git/cafe/configs"
-editor = "micro"
+editor = "msedit"
 
 
 def check_file(path: Path, allow_dir=False):
