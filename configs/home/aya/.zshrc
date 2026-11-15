@@ -1,27 +1,29 @@
-#if [[ -z "$TMUX" ]]; then
-#    fastfetch -c /usr/share/fastfetch/presets/examples/14.jsonc
-#fi
+if [[ -z "$TMUX" ]]; then
+    fastfetch -c /usr/share/fastfetch/presets/examples/14.jsonc
+fi
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-alias clip='curl -F c=@- "https://fars.ee/?u=1"'
-alias clipe='curl -Ffile=@- -Fexpires=1 https://envs.sh'
-alias clip2='curl -F file=@- https://envs.sh'
+alias clip='curl -Fc=@- https://shz.al'
+clip2(){curl -sF "c=@-" https://shz.al | jq -r ".url"}
+#alias clip='curl -F c=@- "https://fars.ee/?u=1"'
 alias clip3='curl -X PUT http://pb.aya1.de --data-binary @-'
 alias dufl='LANG=C duf -only local,network -hide-mp "/var*"'
 alias ip='ip --color'
-alias ll='exa -lh --time-style long-iso --icons'
+alias ll='exa -lh --time-style long-iso --icons=auto'
 alias naliu='nali update;rm -f ~/.local/share/nali/Geo*;wget https://github.com/P3TERX/GeoLite.mmdb/releases/latest/download/GeoLite2-City.mmdb -P ~/.local/share/nali -q --show-progress'
+alias omo='ulimit -n 10240;omo'
 alias rgn='rg --no-line-number --no-filename'
-alias -g -- -h='-h 2>&1 | bat --language=help --style=plain --paging=never'
-alias -g -- --help='--help 2>&1 | bat --language=help --style=plain --paging=never'
+#alias -g -- -h='-h 2>&1 | env BAT_THEME= bat --language=help --style=plain --paging=never'
+#alias -g -- --help='--help 2>&1 | env BAT_THEME= bat --language=help --style=plain --paging=never'
 dg(){dog $@|nali}
-get_pacman(){(url=https://mirror.cachyos.org/repo/x86_64/cachyos/;sudo pacman -U $url$(curl -s $url|perl -ne 'print "$1" if /title="(pacman.*?zst)"/'))}
+get_pacman(){(url=https://mirror.cachyos.org/repo/x86_64/cachyos/;sudo pacman -U $url$(curl -s $url|perl -ne 'print "$1" if /title="(pacman-\d.*?zst)"/'))}
 killport(){echo "Killing port $1"&&kill -9 `lsof -t -i:$1`; }
 short(){curl -F"shorten=$1" https://envs.sh}
 sn(){sudo btrfs su sn -r @root-$1 @root-$1-r && sudo btrfs su sn -r @home-$1 @home-$1-r}
-vget(){ulimit -n 10240;N_m3u8DL-RE $(omo "$1") --save-name "$2"}
+vget(){ulimit -n 10240;N_m3u8DL-RE $(omo "$1"|jq -r ".Url") --log-level ERROR --save-name "$2"}
+nget(){ulimit -n 10240;N_m3u8DL-RE "$2" --log-level ERROR --save-name "$1"}
 y(){rg $@ ~/Downloads/bk/ayat-bk/git/tg_tldr_bot/yu|perl -ne 'print $1=~s/\\n/\n/gr."\n\n" if $.%2==0 && /: "(.*)"/'}
 
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -98,3 +100,12 @@ zinit light romkatv/powerlevel10k
 # the fuck
 #eval "$(pay-respects zsh --alias)"
 ### End of Zinit's installer chunk
+eval "$(~/.local/bin/mise activate zsh)"
+
+# pnpm
+export PNPM_HOME='/home/aya/.local/share/pnpm'
+case ":$PATH:" in
+  ":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
