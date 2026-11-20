@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -e
+
+PROJECT_DIR="$(pwd)"
+USER_HOME="$HOME"
+
+# 加载 mise 环境
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise env -s bash)"
+fi
+
+bwrap \
+  --ro-bind /usr /usr \
+  --ro-bind /bin /bin \
+  --ro-bind /lib /lib \
+  --ro-bind-try /lib64 /lib64 \
+  --ro-bind /etc /etc \
+  --proc /proc \
+  --dev /dev \
+  --tmpfs /tmp \
+  --ro-bind-try /usr/local /usr/local \
+  --ro-bind-try "$USER_HOME/.local/bin" "$USER_HOME/.local/bin" \
+  --ro-bind-try "$USER_HOME/.local/share/mise" "$USER_HOME/.local/share/mise" \
+  --ro-bind-try "$USER_HOME/.config/mise" "$USER_HOME/.config/mise" \
+  --bind-try "$USER_HOME/.go" "$USER_HOME/.go" \
+  --bind-try "$USER_HOME/.cache/go-build" "$USER_HOME/.cache/go-build" \
+  --bind "$PROJECT_DIR" "$PROJECT_DIR" \
+  --bind "$USER_HOME/.commandcode" "$USER_HOME/.commandcode" \
+  --setenv PATH "$PATH" \
+  --chdir "$PROJECT_DIR" \
+  --unshare-pid \
+  --die-with-parent \
+  commandcode --yolo "$@"
