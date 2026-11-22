@@ -106,7 +106,7 @@ zinit light romkatv/powerlevel10k
 # the fuck
 #eval "$(pay-respects zsh --alias)"
 ### End of Zinit's installer chunk
-eval "$(~/.local/bin/mise activate zsh)"
+eval "$(mise activate zsh)"
 
 # pnpm
 export PNPM_HOME='/home/aya/.local/share/pnpm'
