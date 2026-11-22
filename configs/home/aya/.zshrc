@@ -25,7 +25,13 @@ sn(){sudo btrfs su sn -r @root-$1 @root-$1-r && sudo btrfs su sn -r @home-$1 @ho
 vget(){ulimit -n 10240;N_m3u8DL-RE $(omo "$1"|jq -r ".Url") --log-level ERROR --save-name "$2"}
 nget(){ulimit -n 10240;N_m3u8DL-RE "$2" --log-level ERROR --save-name "$1"}
 y(){rg $@ ~/Downloads/bk/ayat-bk/git/tg_tldr_bot/yu|perl -ne 'print $1=~s/\\n/\n/gr."\n\n" if $.%2==0 && /: "(.*)"/'}
-
+mkcd() {
+  if [ "$#" -eq 0 ]; then
+    echo "用法: mkcd <目录路径>" >&2
+    return 1
+  fi
+  mkdir -p -- "$1" && cd -- "$1"
+}
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
     command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
