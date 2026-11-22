@@ -8,6 +8,8 @@ USER_HOME="$HOME"
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise env -s bash)"
 fi
+export PNPM_HOME='/home/aya/.local/share/pnpm'
+export PATH="$PNPM_HOME/bin:$PATH"
 
 bwrap \
   --ro-bind /usr /usr \
@@ -19,9 +21,11 @@ bwrap \
   --dev /dev \
   --tmpfs /tmp \
   --ro-bind-try /usr/local /usr/local \
-  --ro-bind-try "$USER_HOME/.local/bin" "$USER_HOME/.local/bin" \
-  --ro-bind-try "$USER_HOME/.local/share/mise" "$USER_HOME/.local/share/mise" \
-  --ro-bind-try "$USER_HOME/.config/mise" "$USER_HOME/.config/mise" \
+  --bind-try "$USER_HOME/.local/bin" "$USER_HOME/.local/bin" \
+  --bind-try "$USER_HOME/.local/share/mise" "$USER_HOME/.local/share/mise" \
+  --bind-try "$PNPM_HOME" "$PNPM_HOME" \
+  --bind-try "$USER_HOME/.config/go" "$USER_HOME/.config/go" \
+  --bind-try "$USER_HOME/.config/mise" "$USER_HOME/.config/mise" \
   --bind-try "$USER_HOME/.go" "$USER_HOME/.go" \
   --bind-try "$USER_HOME/.cache/go-build" "$USER_HOME/.cache/go-build" \
   --bind "$PROJECT_DIR" "$PROJECT_DIR" \
