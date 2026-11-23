@@ -8,19 +8,27 @@ USER_HOME="$HOME"
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise env -s bash)"
 fi
-export PNPM_HOME='/home/aya/.local/share/pnpm'
+
+export PNPM_HOME="$USER_HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME/bin:$PATH"
+export AGENT_BROWSER_EXECUTABLE_PATH='/bin/chromium'
+export AGENT_BROWSER_PROFILE="$USER_HOME/.agent-browser/profile"
+
+mkdir -p "$USER_HOME/.agent-browser/profile"
 
 bwrap \
   --ro-bind /usr /usr \
   --ro-bind /bin /bin \
   --ro-bind /lib /lib \
   --ro-bind-try /lib64 /lib64 \
+  --ro-bind-try /usr/local /usr/local \
   --ro-bind /etc /etc \
   --proc /proc \
   --dev /dev \
   --tmpfs /tmp \
-  --ro-bind-try /usr/local /usr/local \
+  --bind "$PROJECT_DIR" "$PROJECT_DIR" \
+  --bind "$USER_HOME/.commandcode" "$USER_HOME/.commandcode" \
+  --bind "$USER_HOME/.agent-browser" "$USER_HOME/.agent-browser" \
   --bind-try "$USER_HOME/.local/bin" "$USER_HOME/.local/bin" \
   --bind-try "$USER_HOME/.local/share/mise" "$USER_HOME/.local/share/mise" \
   --bind-try "$PNPM_HOME" "$PNPM_HOME" \
@@ -28,9 +36,6 @@ bwrap \
   --bind-try "$USER_HOME/.config/mise" "$USER_HOME/.config/mise" \
   --bind-try "$USER_HOME/.go" "$USER_HOME/.go" \
   --bind-try "$USER_HOME/.cache/go-build" "$USER_HOME/.cache/go-build" \
-  --bind "$PROJECT_DIR" "$PROJECT_DIR" \
-  --bind "$USER_HOME/.commandcode" "$USER_HOME/.commandcode" \
-  --setenv PATH "$PATH" \
   --chdir "$PROJECT_DIR" \
   --unshare-pid \
   --die-with-parent \
