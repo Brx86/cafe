@@ -21,6 +21,12 @@ if status is-interactive
     abbr st     'systemctl status'
     abbr s      'source .venv/bin/activate.fish'
     abbr uvi    'uv pip install'
+    # abbr --add cgtd 'systemd-run --user --slice cgtproxy-direct.slice --collect -P --'
+    # abbr --add cgtp 'systemd-run --user --slice cgtproxy-proxy.slice --collect -P --'
+    abbr --add cgtd 'systemd-run --user --scope --slice cgtproxy-direct.slice -q --'
+    abbr --add cgtp 'systemd-run --user --scope --slice cgtproxy-proxy.slice -q --'
+    abbr --add cgtd-shell 'systemd-run --user --slice cgtproxy-direct.slice -S'
+    abbr --add cgtd-gui 'systemd-run --user --slice cgtproxy-direct.slice --collect --'
     zoxide init fish | source
     # 在 pwd 中包含 "odin" 字符串时，Ctrl+s 执行 odinfmt 并执行当前命令
     # 否则，Ctrl+s 执行默认的 forward-search-history
