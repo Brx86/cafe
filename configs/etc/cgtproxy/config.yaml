@@ -1,0 +1,150 @@
+# SPDX-FileCopyrightText: 2025 Chen Linxuan <me@black-desk.cn>
+#
+# SPDX-License-Identifier: MIT
+
+# This file is my daily use configuration,
+# I use it to show how to use cgtproxy with mihomo.
+#
+# Configuration fields and behavior are documented in GoDoc:
+# https://pkg.go.dev/github.com/black-desk/cgtproxy/internal/cgtproxy/config#Config
+
+version: 2
+cgroup-root: AUTO # path to cgroupfs v2 mount point or "AUTO"
+route-table: 300
+
+# Select a target for traffic routed through this host, for example from LAN
+# devices, virtual machines, or Docker bridge containers. This is independent
+# of local cgroup rules, including the rule matching /.
+# Omit gateway to leave forwarding unchanged, or use gateway: {direct: true}.
+# Exactly one of tproxy or direct: true must be selected.
+# cgtproxy does not enable IP forwarding or configure interface settings,
+# firewall permissions, or NAT for direct forwarding; configure these separately.
+# Docker usually supplies these settings for its bridges.
+# For container DNS timeouts, see:
+# https://github.com/black-desk/cgtproxy/blob/master/docs/troubleshooting.md#docker-container-dns-times-out-in-gateway-mode
+gateway:
+  tproxy: mihomo
+
+# This means any traffic send to 127.0.0.1 and ::1 will be directly send
+# without influenced by the following configuration.
+bypass:
+  - 127.0.0.0/8
+  - ::1
+
+tproxies:
+  mihomo:
+    mark: 3000
+    port: 7893
+
+    # Do not proxy UDP traffic. They will be send directly.
+    # no-udp: false
+
+    # Do not proxy IPv6 traffic. They will be send directly.
+    # mihomo 侧为 ipv6: false，这里保持直连以免 IPv6 流量被送进不处理 IPv6 的内核。
+    no-ipv6: true
+
+    # Hijack all IPv4 traffic which destination port is 53
+    # and redirect them to ip:port.
+    # This field is optional.
+    # In gateway mode, hijacking forwarded DNS to this loopback address requires
+    # route_localnet on the host's incoming interface. After Docker creates
+    # docker0, check and enable it on the host:
+    #   sysctl net.ipv4.conf.docker0.route_localnet
+    #   sudo sysctl -w net.ipv4.conf.docker0.route_localnet=1
+    #
+    # To persist the setting, put this in /etc/sysctl.d/90-cgtproxy.conf:
+    #   net.ipv4.conf.docker0.route_localnet = 1
+    # With standard systemd udev rules, settings are applied when the interface
+    # appears, so this file can be saved before docker0 exists. If the interface
+    # already exists, apply the file immediately:
+    #   sudo sysctl --load=/etc/sysctl.d/90-cgtproxy.conf
+    # On systems without this mechanism, arrange to reload the setting after
+    # interface creation or recreation. See sysctl.d(5).
+    #
+    # Replace docker0 with the actual incoming interface for custom bridges.
+    # Alternatively, use a local non-loopback address where the DNS service
+    # listens and which is reachable from that interface.
+    # cgtproxy does not change these sysctls automatically.
+    dns-hijack:
+      ip: 127.0.0.1
+      port: 1053
+
+# Rules are matched in order.
+# The target selected for `/` is inherited by descendant cgroups without a
+# more specific target. Local packets without a queryable socket cgroup keep
+# their normal routing.
+# Forwarded traffic uses the independent gateway target above.
+# An explicit `match: '^/$'` rule can select this target independently.
+# `match` is an regex to match the cgroup path.
+# `direct` means the traffic will not be redirect to any TPROXY server;
+# `tproxy` means the traffic will be redirect to that TPROXY server.
+#
+# NOTE: You can use systemd-cgls to check the cgroup layout on your system.
+#
+# NOTE: Any web service will provide their service directly.
+#       Traffics in connection created by remote host
+#       will never redirect to TPROXY server.
+rules:
+  # This rule match the mihomo core.
+  # Make cgtproxy produce nft rules that
+  # route the network traffic comes from this cgroupfs as usual.
+  - # AUR packages `mihomo` and `mihomo-bin`
+    # contains the `mihomo` systemd service,
+    # which will be launched by systemd
+    # in cgroup `/system.slice/mihomo.service`.
+    # But [my mihomo deb package](https://github.com/black-desk/debs/tree/master/one.metacubex.mihomo)
+    # use a systemd service name `one.metacubex.mihomo`.
+    match: |-
+      \/system\.slice\/(?:one\.metacubex\.)?mihomo\.service
+    direct: true
+
+  # Same as above.
+  # Let's configure the user-level `cgtproxy-direct.slice`
+  # and `cgtproxy-proxy.slice` cgroups.
+  #
+  # Using this setup, you can start a non-proxy shell
+  # by execute:
+  #
+  # ```bash
+  # systemd-run --user --slice cgtproxy-direct.slice --shell
+  # ```
+  #
+  # The command above start the new shell in a cgroup like
+  # `/user.slice/user-1000.slice/user@1000.service/cgtproxy.slice/cgtproxy-direct.slice/run-u22.service`,
+  # which match the regex in your configuration.
+  # Then cgtproxy will produce nft rules to
+  # make that `run-u22.service` get rid of transparent proxy.
+  - match: |-
+      \/user\.slice\/user-\d+\.slice/user@\d+\.service\/cgtproxy\.slice\/cgtproxy-direct\.slice\/.*
+    direct: true
+  - match: |-
+      \/user\.slice\/user-\d+\.slice/user@\d+\.service\/cgtproxy\.slice\/cgtproxy-proxy\.slice\/.*
+    tproxy: mihomo
+
+  # Application related rules:
+  # To make these rules working across desktop environments,
+  # please take a look on https://systemd.io/DESKTOP_ENVIRONMENTS/.
+  # NOTE:
+  # | Desktop Environment | Launcher    |
+  # |---------------------|-------------|
+  # | GNOME               | `"gnome"`   |
+  # | dde                 | `"DDE"`     |
+  # | KDE                 | none        |
+  # | flatpak             | `"flatpak"` |
+  # So we should use
+  # ```
+  # \/user\.slice\/user-\d+\.slice\/user@\d+\.service\/app\.slice\/app(?:-(?:gnome|DDE|flatpak))?-APPID(?:-.+\.scope|(?:@.+)?\.service)
+  # ```
+  # to match application named `APPID`.
+  # Check https://regex101.com/r/BgZcws/2 for example application cgroup names.
+
+  # https://parsec.app/
+  # `parsec` should always connect to network directly.
+  - match: |-
+      \/user\.slice\/user-\d+\.slice\/user@\d+\.service\/app\.slice\/app(?:-(?:gnome|DDE|flatpak))?-(?:parsecd|com\.parsecgaming\.parsec)(?:-.+\.scope|(?:@.+)?\.service)
+    direct: true
+
+  # For any cgroup else, TPROXY to mihomo.
+  - match: |-
+      \/.*
+    tproxy: mihomo
